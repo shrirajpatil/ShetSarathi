@@ -14,7 +14,7 @@ ShetSarathi is an innovative **Virtual Agricultural Marketplace** designed to br
 
 - **Backend:** Django, Django REST Framework (DRF)
 - **Frontend:** HTML, CSS, JavaScript
-- **Database:** MySQL
+- **Database:** SQLite3
 
 ## 🚀 Installation & Setup
 

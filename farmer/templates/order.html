@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<main class="offcanvas-enabled" id="main-content" style="padding-top: 5rem; background: #f8fafc;">
+  <section class="ps-lg-4 pe-lg-3 pt-4">
+    <div class="container">
+        <div class="row">
+           {% include 'accounts/dashbord_sidebar.html' %}
+        <main class="col-md-9">
+            <!-- Order History Section -->
+            <article class="card shadow-sm border-0 mb-4" 
+                     style="border-radius: 1rem; border: 1px solid rgba(40,167,69,0.15);">
+                <header class="card-header py-3" 
+                        style="background: linear-gradient(45deg, #007bff, #00b4db);">
+                    <h2 class="h6 mb-0 text-white fw-semibold">
+                        <i class="fas fa-history me-2 text-white"></i>
+                        {% trans "Your Order History" %}
+                    </h2>
+                </header>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="example" class="display table table-hover" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">{% trans "Order #" %}</th>
+                                        <th scope="col">{% trans "Billing Name" %}</th>
+                                        <th scope="col">{% trans "Total (Goods)" %}</th>
+                                        <th scope="col">{% trans "Transport Cost" %}</th>
+                                        <th scope="col">{% trans "Grand Total" %}</th>
+                                        <th scope="col">{% trans "Date" %}</th>
+                                        <th scope="col">{% trans "Status" %}</th>
+                                        <th scope="col">{% trans "Actions" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order_detail in orders %}
+                                        <tr {% if order_detail.is_bulk %}class="bulk-order"{% endif %}>
+                                            <th scope="row">
+                                                <a href="{% url 'order_detail' order_detail.order.order_number %}" 
+                                                   style="color: #007bff; text-decoration: none; transition: all 0.3s ease;">
+                                                    {{ order_detail.order.order_number }}
+                                                </a>
+                                            </th>
+                                            <td>{{ order_detail.order.full_name }}</td>
+                                            <td> {{ order_detail.total }}</td>
+                                            <td>$ {{ order_detail.transport_cost }}</td>
+                                            <td>$ {{ order_detail.grand_total }}</td>
+                                            <td>{{ order_detail.order.created_at }}</td>
+                                            <td {% if order_detail.order.status == "New" %} style="background-color: #fff3cd;" {% endif %}>
+                                                {% if order_detail.order.status %}{{ order_detail.order_status }}{% else %}N/A{% endif %}
+                                            </td>
+                                            <td>
+                                                <form method="post" action="{% url 'farmer:change_status' order_detail.order.id %}">
+                                                    {% csrf_token %}
+                                                    <select id="status" name="status" 
+                                                            class="form-select form-select-sm" 
+                                                            style="border-radius: 0.5rem; border: 1px solid rgba(40,167,69,0.2);">
+                                                        <option value="New" {% if order_detail.order.status == "New" %}selected{% endif %}>{% trans "New" %}</option>
+                                                        <option value="Accepted" {% if order_detail.order.status == "Accepted" %}selected{% endif %}>{% trans "Accepted" %}</option>
+                                                        <option value="Canceled" {% if order_detail.order.status == "Canceled" %}selected{% endif %}>{% trans "Canceled" %}</option>
+                                                        <option value="Delivered" {% if order_detail.order.status == "Delivered" %}selected{% endif %}>{% trans "Delivered" %}</option>
+                                                    </select>
+                                                    <input type="hidden" name="order_id" value="{{ order_detail.order.id }}">
+                                                    <button type="submit" 
+                                                            class="btn btn-sm btn-primary mt-2"
+                                                            style="border-radius: 0.5rem; background: linear-gradient(45deg, #007bff, #00b4db); border: none;">
+                                                        {% trans "Update" %}
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Negotiation Requests Section -->
+            <article class="card shadow-sm border-0" 
+                     style="border-radius: 1rem; border: 1px solid rgba(40,167,69,0.15);">
+                <header class="card-header py-3" 
+                        style="background: linear-gradient(45deg, #007bff, #00b4db);">
+                    <h2 class="h6 mb-0 text-white fw-semibold">
+                        <i class="fas fa-handshake me-2 text-white"></i>
+                        {% trans "Negotiation Requests" %}
+                    </h2>
+                </header>
+                <div class="card-body p-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="negotiation_table" class="display table table-hover" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">{% trans "Product" %}</th>
+                                        <th scope="col">{% trans "Buyer" %}</th>
+                                        <th scope="col">{% trans "Proposed Price" %}</th>
+                                        <th scope="col">{% trans "Quantity" %}</th>
+                                        <th scope="col">{% trans "Date" %}</th>
+                                        <th scope="col">{% trans "Status" %}</th>
+                                        <th scope="col">{% trans "Actions" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for request in negotiation_requests %}
+                                        <tr>
+                                            <td>{{ request.product.product_name }}</td>
+                                            <td>{{ request.buyer.username }}</td>
+                                            <td>$ {{ request.proposed_price }}</td>
+                                            <td>{{ request.quantity }}</td>
+                                            <td>{{ request.created_at }}</td>
+                                            <td>{{ request.status }}</td>
+                                            <td>
+                                                <form method="post" action="{% url 'farmer:change_negotiation_status' request.id %}">
+                                                    {% csrf_token %}
+                                                    <select name="status" 
+                                                            class="form-select form-select-sm" 
+                                                            style="border-radius: 0.5rem; border: 1px solid rgba(40,167,69,0.2);">
+                                                        <option value="Pending" {% if request.status == "Pending" %}selected{% endif %}>{% trans "Pending" %}</option>
+                                                        <option value="Accepted" {% if request.status == "Accepted" %}selected{% endif %}>{% trans "Accepted" %}</option>
+                                                        <option value="Rejected" {% if request.status == "Rejected" %}selected{% endif %}>{% trans "Rejected" %}</option>
+                                                    </select>
+                                                    <button type="submit" 
+                                                            class="btn btn-sm btn-primary mt-2"
+                                                            style="border-radius: 0.5rem; background: linear-gradient(45deg, #007bff, #00b4db); border: none;">
+                                                        {% trans "Update" %}
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </main>
+    </div>
+</div>
+</section>
+</main>
+
+<style>
+.bulk-order {
+    background-color: #e6ffe6;
+}
+
+/* Table styling */
+.table-hover tbody tr:hover {
+    background-color: rgba(40,167,69,0.05);
+    transform: scale(1.01);
+    transition: all 0.3s ease;
+}
+
+/* Card hover effect */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.05);
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 35px rgba(90,167,255,0.08);
+}
+
+/* Button hover effect */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(90,167,255,0.2);
+}
+</style>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+new DataTable('#example');
+new DataTable('#negotiation_table');
+</script>
+{% endblock content %}

@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<main class="offcanvas-enabled" style="padding-top: 5rem; background: #f8fafc;">
+    <section class="ps-lg-4 pe-lg-3 pt-4">
+        {% include 'accounts/alert.html' %}
+        <div class="container">
+            <div class="row">
+                {% include 'accounts/dashbord_sidebar.html' %}
+                <main class="col-md-9">
+                    <article class="card shadow-sm border-0" 
+                             style="border-radius: 1rem; border: 1px solid rgba(40,167,69,0.15);">
+                        <header class="card-header py-4" 
+                                style="background: linear-gradient(45deg, #007bff, #00b4db);">
+                            <h2 class="h4 mb-0 text-white fw-semibold">
+                                <i class="fas fa-edit me-2" style="color: #34c759;"></i>
+                                {% trans "Edit Product Details" %}
+                            </h2>
+                        </header>
+                        <div class="card-body p-4">
+                            <form action="{% url 'farmer:edit_product' product_id %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark fw-medium">
+                                                <i class="fas fa-tag me-2" style="color: #28a745;"></i>
+                                                {% trans "Product Name" %}
+                                            </label>
+                                            {{ form.product_name }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark fw-medium">
+                                                <i class="fas fa-align-left me-2" style="color: #28a745;"></i>
+                                                {% trans "Product Description" %}
+                                            </label>
+                                            {{ form.description }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark fw-medium">
+                                                <i class="fas fa-dollar-sign me-2" style="color: #28a745;"></i>
+                                                {% trans "Price" %}
+                                            </label>
+                                            {{ form.price }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark fw-medium">
+                                                <i class="fas fa-image me-2" style="color: #28a745;"></i>
+                                                {% trans "Product Image" %}
+                                            </label>
+                                            {{ form.image }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark fw-medium">
+                                                <i class="fas fa-layer-group me-2" style="color: #28a745;"></i>
+                                                {% trans "Category" %}
+                                            </label>
+                                            {{ form.category }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark fw-medium">
+                                                <i class="fas fa-box me-2" style="color: #28a745;"></i>
+                                                {% trans "Quantity" %}
+                                            </label>
+                                            {{ form.quantity }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark fw-medium">
+                                                <i class="fas fa-check-circle me-2" style="color: #28a745;"></i>
+                                                {% trans "Available" %}
+                                            </label>
+                                            {{ form.is_available }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark fw-medium">
+                                                <i class="fas fa-boxes me-2" style="color: #28a745;"></i>
+                                                {% trans "Bulk Eligible" %}
+                                            </label>
+                                            {{ form.is_bulk_eligible }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark fw-medium">
+                                                <i class="fas fa-balance-scale me-2" style="color: #28a745;"></i>
+                                                {% trans "Bulk Threshold" %}
+                                            </label>
+                                            {{ form.bulk_threshold }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark fw-medium">
+                                                <i class="fas fa-money-bill-wave me-2" style="color: #28a745;"></i>
+                                                {% trans "Bulk Price" %}
+                                            </label>
+                                            {{ form.bulk_price }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-5 pt-4 border-top" style="border-color: rgba(90,167,255,0.1) !important;">
+                                    <button type="submit" 
+                                            class="btn btn-lg w-100 py-3 fw-semibold"
+                                            style="background: linear-gradient(45deg, #007bff, #00b4db); 
+                                                   border: none;
+                                                   color: white;
+                                                   border-radius: 0.75rem;
+                                                   letter-spacing: 0.5px;
+                                                   transition: all 0.3s ease;">
+                                        <i class="fas fa-save me-2"></i>
+                                        {% trans "Save Changes" %}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+</main>
+
+<style>
+    /* Form styling */
+    .form-control, .form-select {
+        border-radius: 0.75rem;
+        padding: 0.85rem 1.25rem;
+        border: 1px solid rgba(40,167,69,0.2);
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 3px rgba(40,167,69,0.1);
+    }
+
+    /* Card hover effect */
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 25px rgba(0,0,0,0.05);
+    }
+    
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 35px rgba(90,167,255,0.08);
+    }
+
+    /* Button hover effect */
+    .btn {
+        transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(90,167,255,0.2);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .card {
+            border-radius: 0.75rem;
+            margin: 0 -1rem;
+        }
+        
+        .form-control, .form-select {
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            padding: 1rem;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+{% endblock content %}

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<main class="offcanvas-enabled" style="padding-top: 5rem; background: #f8fafc;">
+    <section class="ps-lg-4 pe-lg-3 pt-4">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-12">
+                    <article class="card shadow-sm border-0" 
+                             style="border-radius: 1rem; border: 1px solid rgba(40,167,69,0.15);">
+                        <header class="card-header py-3" 
+                                style="background: linear-gradient(45deg, #007bff, #00b4db);">
+                            <h1 class="h4 mb-0 text-white fw-semibold">
+                                <i class="fas fa-seedling me-2 text-white"></i>
+                                {% trans "Product List" %}
+                            </h1>
+                        </header>
+                        <div class="card-body p-4">
+                            <table id="example" class="display table table-hover" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>{% trans "Name" %}</th>
+                                        <th>{% trans "Description" %}</th>
+                                        <th>{% trans "Price" %}</th>
+                                        <th>{% trans "Remove" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in products %}
+                                        <tr>
+                                            <td>
+                                                <a href="{% url 'farmer:edit_product' product.id %}" 
+                                                   style="color: #007bff; text-decoration: none; transition: all 0.3s ease;">
+                                                    {{ product.product_name }}
+                                                </a>
+                                            </td>
+                                            <td>{{ product.description }}</td>
+                                            <td>${{ product.price }}</td>
+                                            <td>
+                                                <a href="{% url 'farmer:delete_product' product.id %}" 
+                                                   style="color: #dc3545; text-decoration: none; transition: all 0.3s ease;">
+                                                    <i class="fas fa-trash-alt me-2"></i>{% trans "Delete" %}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                </main>
+            </div> <!-- row.// -->
+        </div> <!-- container.// -->
+    </section>
+</main>
+
+<style>
+    /* Table styling */
+    .table-hover tbody tr:hover {
+        background-color: rgba(40,167,69,0.05);
+        transform: scale(1.01);
+        transition: all 0.3s ease;
+    }
+
+    /* Card hover effect */
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 25px rgba(0,0,0,0.05);
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 35px rgba(90,167,255,0.08);
+    }
+
+    /* Link hover effect */
+    a:hover {
+        color: #00b4db !important;
+        text-decoration: underline;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .card {
+            border-radius: 0.75rem;
+            margin: 0 -1rem;
+        }
+
+        .table th, .table td {
+            padding: 0.75rem;
+        }
+    }
+</style>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+    new DataTable('#example', {
+        paging: true,
+        searching: true,
+        ordering: true,
+        responsive: true,
+    });
+</script>
+{% endblock content %}

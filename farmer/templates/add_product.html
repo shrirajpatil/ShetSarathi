@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<main class="offcanvas-enabled" style="padding-top: 5rem; background: #f8fafc;">
+    <section class="ps-lg-4 pe-lg-3 pt-4">
+        {% include 'accounts/alert.html' %}
+        <div class="container">
+            <div class="row">
+                {% include 'accounts/dashbord_sidebar.html' %}
+                <main class="col-md-9">
+                    <article class="card shadow-sm border-0 overflow-hidden" 
+                             style="border-radius: 1rem; border: 1px solid rgba(40,167,69,0.15);">
+                        <header class="card-header py-4" 
+                                style="background: linear-gradient(45deg, #007bff, #00b4db);">
+                            <h2 class="h4 mb-0 text-white fw-semibold">
+                                <i class="fas fa-seedling me-2" style="color: #34c759;"></i>
+                                {% trans "Add Agricultural Product" %}
+                            </h2>
+                        </header>
+                        
+                        <div class="card-body p-4">
+                            <form action="{% url 'farmer:add_products' %}" method="POST" enctype="multipart/form-data" 
+                                  class="needs-validation" novalidate>
+                                {% csrf_token %}
+                                
+                                <div class="row g-4">
+                                    {% for field in add_product_form %}
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-3 position-relative">
+                                            <!-- Move checkboxes to the front of the label -->
+                                            {% if field.name == 'available' or field.name == 'bulk_order' %}
+                                            <div class="form-check">
+                                                {{ field }}
+                                                <label for="{{ field.id_for_label }}" 
+                                                       class="form-check-label text-dark mb-2 d-block fw-medium">
+                                                    <i class="fas fa-check-circle me-2" style="color: #28a745; font-size: 0.9rem;"></i>
+                                                    {{ field.label }}
+                                                </label>
+                                            </div>
+                                            {% else %}
+                                            <label for="{{ field.id_for_label }}" 
+                                                   class="form-label text-dark mb-2 d-block fw-medium">
+                                                {{ field.label }}
+                                                {% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+                                            </label>
+                                            <div class="input-group">
+                                                {{ field }}
+                                            </div>
+                                            {% endif %}
+                                            {% if field.help_text %}
+                                            <small class="form-text text-muted mt-2 d-block ps-4">
+                                                <i class="fas fa-info-circle me-2" style="color: #28a745;"></i>
+                                                {{ field.help_text }}
+                                            </small>
+                                            {% endif %}
+                                            {% for error in field.errors %}
+                                            <div class="invalid-feedback d-block text-danger mt-2 ps-4">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                                {{ error }}
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="mt-5 pt-4 border-top" style="border-color: rgba(90,167,255,0.1) !important;">
+                                    <!-- Save Product button with header gradient -->
+                                    <button type="submit" 
+                                            class="btn btn-lg w-100 py-3 fw-semibold"
+                                            style="background: linear-gradient(45deg, #007bff, #00b4db); 
+                                                   border: none;
+                                                   color: white;
+                                                   border-radius: 0.75rem;
+                                                   letter-spacing: 0.5px;
+                                                   transition: all 0.3s ease;">
+                                        <i class="fas fa-save me-2"></i>
+                                        {% trans "Save Product Details" %}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+</main>
+
+<style>
+    /* Adjusted description field */
+    textarea.form-control {
+        min-height: 80px;
+        max-height: 120px;
+        resize: vertical;
+        font-size: 0.85rem;
+        line-height: 1.4;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .form-control:not(textarea) {
+        min-height: 48px;
+    }
+
+    .form-control, .form-select, textarea {
+        border-radius: 0.75rem;
+        padding: 0.85rem 1.25rem;
+        border: 1px solid rgba(40,167,69,0.2);
+        transition: all 0.3s ease;
+        font-size: 0.95rem;
+    }
+
+    .form-control:focus, .form-select:focus, textarea:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 0 3px rgba(40,167,69,0.1);
+    }
+
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 25px rgba(0,0,0,0.05);
+    }
+    
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 35px rgba(90,167,255,0.08);
+    }
+
+    .btn {
+        transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(90,167,255,0.2);
+    }
+
+    @media (max-width: 768px) {
+        .card {
+            border-radius: 0.75rem;
+            margin: 0 -1rem;
+        }
+        
+        .form-control, .form-select, textarea {
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .btn {
+            padding: 1rem;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+    <main class="offcanvas-enabled" style="padding-top: 4rem;">
+        <section class="ps-lg-4 pe-lg-3 pt-4">
+            <div class="about-box-main">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="banner-frame">
+                                <img class="img-fluid" src="{% static 'images/add-post-img.jpg' %}" alt="{% trans 'Add a Post' %}" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 class="noo-sh-title-top">{% trans "Add a" %} <span>{% trans "Post" %}</span></h2>
+                            <p>{% trans "Share your thoughts, questions, or experiences with the farmer community. Your post will be visible to fellow farmers across the platform." %}</p>
+                            <form method="post" action="{% url 'add_post' %}">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <textarea name="content" class="form-control" rows="4" placeholder="{% trans 'Share your thoughts...' %}" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success" style="background-color: #008000; border-color: #008000;">{% trans "Submit Post" %}</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

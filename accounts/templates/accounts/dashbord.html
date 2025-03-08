@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<main class="offcanvas-enabled" id="main-content" style="padding-top: 5rem;">
+    <section class="ps-lg-4 pe-lg-3 pt-4" 
+             style="min-height: 84vh; background: linear-gradient(135deg, #f8f9fa 0%, #e6f3fa 100%); position: relative; overflow: hidden;">
+        <!-- Background Decorative Elements -->
+        <div style="position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(40,167,69,0.15) 0%, rgba(40,167,69,0) 70%);"></div>
+        <div style="position: absolute; bottom: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,180,219,0.2) 0%, rgba(0,180,219,0) 70%);"></div>
+
+        <div class="container">
+            <div class="row">
+                {% include 'accounts/dashbord_sidebar.html' %}
+                <main class="col-md-9">
+                    <article class="card shadow-lg border-0" 
+                             style="border-radius: 20px; overflow: hidden; background: linear-gradient(145deg, #ffffff 0%, #f5f8fc 100%);">
+                        <header class="card-header bg-gradient-primary text-white p-4" 
+                                style="background: linear-gradient(45deg, #007bff, #00b4db);">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <strong class="mr-3" 
+                                            style="font-size: 1.2rem; letter-spacing: 1px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                        {% trans "Logged in as:" %}
+                                    </strong>
+                                    <span class="badge bg-white text-primary px-3 py-2" 
+                                          style="border-radius: 25px; font-weight: 500;">
+                                        {{ user.full_name }}
+                                    </span>
+                                </div>
+                                <div class="text-right">
+                                    <small class="text-light opacity-75">{{ current_date }}</small>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="card-body p-5" style="background: #f8f9fa;">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="card h-100 border-0 shadow" 
+                                         style="border-radius: 15px; background: linear-gradient(135deg, #ffffff 0%, #e6f3fa 100%);">
+                                        <div class="card-body text-center p-4">
+                                            <div class="icon-circle mb-3 mx-auto" 
+                                                 style="width: 60px; height: 60px; background: #28a745; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                                {% if request.user.user_role != 'specialist' %}
+                                                    <i class="fas fa-shopping-cart text-white" style="font-size: 1.5rem;"></i>
+                                                {% else %}
+                                                    <i class="fas fa-users text-white" style="font-size: 1.5rem;"></i>
+                                                {% endif %}
+                                            </div>
+                                            <h5 class="card-title text-dark mb-3" 
+                                                style="font-weight: 700; letter-spacing: 0.5px;">
+                                                {% if request.user.user_role != 'specialist' %}
+                                                    {% trans "Total Orders" %}
+                                                {% else %}
+                                                    {% trans "Total Connected Farmer" %}
+                                                {% endif %}
+                                            </h5>
+                                            <h4 class="text-primary mb-4" 
+                                                style="font-size: 2.5rem; font-weight: 600;">{{ orders_count }}</h4>
+                                            {% if request.user.user_role == 'farmer' %}
+                                                <a href="{% url 'farmer:farmerOrder' user.id %}" 
+                                                   class="btn btn-primary px-4 py-2" 
+                                                   style="border-radius: 25px; box-shadow: 0 4px 15px rgba(0,123,255,0.3);">
+                                                    {% trans "View Orders" %}
+                                                </a>
+                                            {% elif request.user.user_role == 'buyer' %}
+                                                <a href="{% url 'my_orders' %}" 
+                                                   class="btn btn-primary px-4 py-2" 
+                                                   style="border-radius: 25px; box-shadow: 0 4px 15px rgba(0,123,255,0.3);">
+                                                    {% trans "View Orders" %}
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card h-100 border-0 shadow" 
+                                         style="border-radius: 15px; background: #ffffff;">
+                                        <div class="card-body text-center p-4">
+                                            <div class="position-relative d-inline-block mb-3">
+                                                <img src="https://www.w3schools.com/howto/img_avatar.png" 
+                                                     alt="{% trans "User Picture" %}" 
+                                                     width="100" height="100" 
+                                                     style="border-radius: 50%; border: 4px solid #00b4db; object-fit: cover;">
+                                                <span class="position-absolute" 
+                                                      style="bottom: 0; right: 0; width: 24px; height: 24px; background: #28a745; border-radius: 50%; border: 2px solid white;"></span>
+                                            </div>
+                                            <p class="mb-2 text-dark" 
+                                               style="font-size: 1.2rem; font-weight: 500;">{{ user.email }}</p>
+                                            <p class="text-muted" 
+                                               style="font-size: 1.1rem; font-weight: 400;">{{ user.phone_number }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Connections Table (Farmer/Specialist Only) -->
+                            {% if request.user.user_role != 'buyer' %}
+                                <div class="row g-4 mt-4">
+                                    <h5 class="text-dark mb-3" 
+                                        style="font-weight: 700; letter-spacing: 0.5px; border-bottom: 2px solid #28a745; display: inline-block; padding-bottom: 8px;">
+                                        {% if request.user.user_role == 'farmer' %}
+                                            {% trans "Connect With Experts" %}
+                                        {% else %}
+                                            {% trans "Connected Farmers" %}
+                                        {% endif %}
+                                    </h5>
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" 
+                                                   style="border-radius: 15px; overflow: hidden; background: #ffffff; box-shadow: 0 6px 20px rgba(0,0,0,0.1); border: 1px solid #28a745;">
+                                                <thead style="background: linear-gradient(45deg, #e6f3fa 0%, #f0f4f8 100%);">
+                                                    <tr>
+                                                        <th scope="col" style="color: #1a2b49; font-weight: 700; padding: 12px; text-align: center;">{% trans "Name" %}</th>
+                                                        <th scope="col" style="color: #1a2b49; font-weight: 700; padding: 12px; text-align: center;">{% trans "Email" %}</th>
+                                                        <th scope="col" style="color: #1a2b49; font-weight: 700; padding: 12px; text-align: center;">{% trans "Phone" %}</th>
+                                                        {% if request.user.user_role == 'farmer' %}
+                                                            <th scope="col" style="color: #1a2b49; font-weight: 700; padding: 12px; text-align: center;">{% trans "Department" %}</th>
+                                                        {% endif %}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for ul in ulist %}
+                                                        <tr style="transition: all 0.3s ease;">
+                                                            <th scope="row" style="padding: 12px; text-align: center;">
+                                                                <a href="{% url 'chatbox' ul.id %}" 
+                                                                   style="color: #007bff; font-weight: 600; transition: all 0.3s ease;">
+                                                                    {{ ul.first_name }} {{ ul.last_name }}
+                                                                </a>
+                                                            </th>
+                                                            <td style="padding: 12px; color: #1a2b49; text-align: center;">{{ ul.email }}</td>
+                                                            <td style="padding: 12px; color: #1a2b49; text-align: center;">{{ ul.phone_number }}</td>
+                                                            {% if request.user.user_role == 'farmer' %}
+                                                                <td style="padding: 12px; color: #1a2b49; text-align: center;">{{ ul.sp_department }}</td>
+                                                            {% endif %}
+                                                        </tr>
+                                                    {% empty %}
+                                                        <tr>
+                                                            <td colspan="{% if request.user.user_role == 'farmer' %}4{% else %}3{% endif %}" 
+                                                                style="padding: 20px; text-align: center; color: #1a2b49; font-weight: 500;">
+                                                                {% trans "No connections found." %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </article>
+
+                    <!-- Marketplace Insights Section -->
+                    <div class="mt-5">
+                        <h3 class="mb-4 text-dark" 
+                            style="font-weight: 600; font-size: 1.75rem; letter-spacing: 0.5px; border-bottom: 2px solid #28a745; display: inline-block; padding-bottom: 8px;">
+                            {% trans "Marketplace Insights" %}
+                        </h3>
+                        <div class="card border-0 shadow-sm" 
+                             style="border-radius: 15px; background: #ffffff; overflow: hidden;">
+                            <div class="card-body p-5">
+                                <div class="row g-4">
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-start">
+                                            <div class="icon-circle me-3" 
+                                                 style="width: 40px; height: 40px; background: #28a745; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-handshake text-white" style="font-size: 1rem;"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="text-dark mb-2" 
+                                                    style="font-weight: 600; font-size: 1.1rem;">{% trans "Build Strong Connections" %}</h5>
+                                                <p class="text-muted" 
+                                                   style="font-size: 0.9rem; line-height: 1.6;">
+                                                    {% trans "Farmers: Communicate clearly with buyers. Buyers: Reach out to farmers for the best deals." %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-start">
+                                            <div class="icon-circle me-3" 
+                                                 style="width: 40px; height: 40px; background: #28a745; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-clock text-white" style="font-size: 1rem;"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="text-dark mb-2" 
+                                                    style="font-weight: 600; font-size: 1.1rem;">{% trans "Time Transactions Wisely" %}</h5>
+                                                <p class="text-muted" 
+                                                   style="font-size: 0.9rem; line-height: 1.6;">
+                                                    {% trans "Farmers: List produce at peak freshness. Buyers: Order early to secure availability." %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-start">
+                                            <div class="icon-circle me-3" 
+                                                 style="width: 40px; height: 40px; background: #28a745; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-chart-line text-white" style="font-size: 1rem;"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="text-dark mb-2" 
+                                                    style="font-weight: 600; font-size: 1.1rem;">{% trans "Leverage Market Trends" %}</h5>
+                                                <p class="text-muted" 
+                                                   style="font-size: 0.9rem; line-height: 1.6;">
+                                                    {% trans "Farmers: Offer in-demand items. Buyers: Explore seasonal trends for better value." %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-5">
+                                    <a href="#" 
+                                       class="btn btn-outline-dark px-5 py-2" 
+                                       style="border-radius: 25px; font-weight: 500; border-width: 2px; letter-spacing: 0.5px; transition: all 0.3s ease;">
+                                        {% trans "Discover More Insights" %}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+</main>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(45deg, #007bff, #00b4db);
+    }
+    
+    .card {
+        transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+    }
+    
+    .table-hover tbody tr:hover {
+        background: linear-gradient(135deg, #e6f3fa 0%, #f0f4f8 100%);
+        transform: scale(1.02);
+    }
+    
+    .btn-primary, .btn-outline-dark {
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+        background: linear-gradient(45deg, #0062cc, #00b4db);
+    }
+    
+    .btn-outline-dark:hover {
+        background-color: #343a40;
+        color: white;
+        border-color: #343a40;
+        transform: translateY(-2px);
+    }
+    
+    .icon-circle {
+        transition: transform 0.3s ease;
+    }
+    
+    .card:hover .icon-circle {
+        transform: scale(1.1);
+    }
+    
+    a:hover {
+        color: #00b4db;
+        text-decoration: none;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+</style>
+
+{% endblock content %}

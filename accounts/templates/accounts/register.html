@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<main class="offcanvas-enabled" style="padding-top: 5rem; background: linear-gradient(135deg, #F5F7FA 0%, #BBDEFB 100%);">
+
+  <section class="ps-lg-4 pe-lg-3 pt-4" style="min-height:84vh;">
+
+    <!-- ============================ COMPONENT REGISTER   ================================= -->
+    <div class="card mx-auto" style="max-width: 400px; margin-top:80px; border: none; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden; animation: fadeIn 0.5s ease;">
+      <div class="card-body" style="background: #FFFFFF; padding: 2rem;">
+        <h4 class="card-title mb-3 text-center" style="color: #28a745; font-weight: 600; font-size: 1.5rem; letter-spacing: 0.3px;">
+          <i class="fas fa-seedling" style="margin-right: 8px;"></i>{% trans "Create Account" %}
+        </h4>
+        {% include "accounts/alert.html" %}
+        <form method="POST" class="needs-validation" novalidate>
+          {% csrf_token %}
+          
+          <div class="row g-2 mb-2">
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="firstName" placeholder=" " name="first_name" 
+                       style="border-color: #28a745; border-radius: 6px; padding: 8px 12px; font-size: 0.9rem; transition: all 0.3s ease;">
+                <label for="firstName" style="color: #6c757d; font-size: 0.9rem;">{% trans "First name" %}</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="lastName" placeholder=" " name="last_name" 
+                       style="border-color: #28a745; border-radius: 6px; padding: 8px 12px; font-size: 0.9rem; transition: all 0.3s ease;">
+                <label for="lastName" style="color: #6c757d; font-size: 0.9rem;">{% trans "Last name" %}</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <div class="form-floating">
+              <input type="email" class="form-control" id="email" placeholder=" " name="email" 
+                     style="border-color: #28a745; border-radius: 6px; padding: 8px 12px; font-size: 0.9rem; transition: all 0.3s ease;">
+              <label for="email" style="color: #6c757d; font-size: 0.9rem;">{% trans "Email Address" %}</label>
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <div class="form-floating">
+              <input type="tel" class="form-control" id="phone" placeholder=" " name="phone_number" 
+                     style="border-color: #28a745; border-radius: 6px; padding: 8px 12px; font-size: 0.9rem; transition: all 0.3s ease;">
+              <label for="phone" style="color: #6c757d; font-size: 0.9rem;">{% trans "Phone Number" %}</label>
+            </div>
+          </div>
+
+          <div class="row g-2 mb-3">
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="password" class="form-control" id="password" placeholder=" " name="password" 
+                       style="border-color: #28a745; border-radius: 6px; padding: 8px 12px; font-size: 0.9rem; transition: all 0.3s ease;">
+                <label for="password" style="color: #6c757d; font-size: 0.9rem;">{% trans "Password" %}</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating">
+                <input type="password" class="form-control" id="confirmPassword" placeholder=" " name="confirm_password" 
+                       style="border-color: #28a745; border-radius: 6px; padding: 8px 12px; font-size: 0.9rem; transition: all 0.3s ease;">
+                <label for="confirmPassword" style="color: #6c757d; font-size: 0.9rem;">{% trans "Confirm Password" %}</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3 text-center">
+            <div class="d-grid gap-2" style="grid-template-columns: repeat(3, 1fr);">
+              <div class="position-relative">
+                <input type="radio" class="btn-check" name="userType" id="buyer" value="buyer" autocomplete="off">
+                <label class="btn btn-outline-success d-flex flex-column align-items-center justify-content-center py-2" 
+                       for="buyer" style="border-radius: 8px; border-width: 1.5px; font-size: 0.85rem;">
+                  <i class="fas fa-shopping-basket mb-1" style="font-size: 1rem;"></i>
+                  <span>{% trans "Buyer" %}</span>
+                </label>
+              </div>
+              <div class="position-relative">
+                <input type="radio" class="btn-check" name="userType" id="farmer" value="farmer" autocomplete="off">
+                <label class="btn btn-outline-success d-flex flex-column align-items-center justify-content-center py-2" 
+                       for="farmer" style="border-radius: 8px; border-width: 1.5px; font-size: 0.85rem;">
+                  <i class="fas fa-tractor mb-1" style="font-size: 1rem;"></i>
+                  <span>{% trans "Farmer" %}</span>
+                </label>
+              </div>
+              <div class="position-relative">
+                <input type="radio" class="btn-check" name="userType" id="specialist" value="specialist" autocomplete="off">
+                <label class="btn btn-outline-success d-flex flex-column align-items-center justify-content-center py-2" 
+                       for="specialist" style="border-radius: 8px; border-width: 1.5px; font-size: 0.85rem;">
+                  <i class="fas fa-microscope mb-1" style="font-size: 1rem;"></i>
+                  <span>{% trans "Specialist" %}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <button type="submit" class="btn btn-primary w-100 py-2" 
+                    style="background: linear-gradient(45deg, #007bff, #00b4db); border: none; color: #fff; 
+                           border-radius: 8px; font-weight: 500; font-size: 0.95rem; transition: all 0.3s ease;">
+              {% trans "Create Account" %}
+            </button>
+          </div>
+
+          <p class="text-center mb-0" style="color: #6c757d; font-size: 0.85rem; line-height: 1.4;">
+            {% trans "By registering, you agree to our" %} 
+            <a href="#" style="color: #007bff; text-decoration: none; font-weight: 500;">{% trans "Terms" %}</a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <p class="text-center mt-3" style="color: #28a745; font-weight: 500; font-size: 0.9rem;">
+      {% trans "Already have an account?" %} 
+      <a href="{%url 'login'%}" style="color: #007bff; text-decoration: none; font-weight: 500;">
+        {% trans "Sign in" %}
+      </a>
+    </p>
+    <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+
+  </section>
+
+</main>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .btn-check:checked + .btn-outline-success {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.15);
+  }
+
+  .btn-outline-success:hover {
+    background-color: rgba(40, 167, 69, 0.05);
+  }
+
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+  }
+
+  .form-floating>label {
+    padding: 0.5rem 0.75rem;
+  }
+</style>
+
+{% endblock content %}

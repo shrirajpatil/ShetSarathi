@@ -1,0 +1,104 @@
+{% load i18n %}
+<aside class="col-md-3">
+    <!--   SIDEBAR   -->
+    <ul class="list-group" style="border-radius: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); background: #FFFFFF;">
+        <a class="list-group-item active" 
+           href="{% url 'dashbord' %}" 
+           style="background: linear-gradient(45deg, #007bff, #00b4db); color: white; border: none; padding: 1.25rem; font-weight: 500; transition: all 0.3s ease; display: flex; align-items: center;"
+           onmouseover="this.style.background='linear-gradient(45deg, #0056b3, #008bb0)';"
+           onmouseout="this.style.background='linear-gradient(45deg, #007bff, #00b4db)';">
+            <i class="fas fa-tachometer-alt" style="margin-right: 10px; font-size: 1.2rem;"></i>
+            {% trans "Dashboard" %}
+        </a>
+
+        {% if request.user.user_role == 'farmer' %}
+            <a class="list-group-item" 
+               href="{% url 'farmer:products' %}" 
+               style="color: #28a745; padding: 1.25rem; border: none; transition: all 0.3s ease; display: flex; align-items: center;"
+               onmouseover="this.style.background='#E6F3FA'; this.style.color='#007bff';"
+               onmouseout="this.style.background='transparent'; this.style.color='#28a745';">
+                <i class="fas fa-seedling" style="margin-right: 10px; font-size: 1.2rem;"></i>
+                {% trans "My Products" %}
+            </a>
+            <a class="list-group-item" 
+               href="{% url 'farmer:farmerOrder' user.id %}" 
+               style="color: #28a745; padding: 1.25rem; border: none; transition: all 0.3s ease; display: flex; align-items: center;"
+               onmouseover="this.style.background='#E6F3FA'; this.style.color='#007bff';"
+               onmouseout="this.style.background='transparent'; this.style.color='#28a745';">
+                <i class="fas fa-shopping-basket" style="margin-right: 10px; font-size: 1.2rem;"></i>
+                {% trans "View Orders" %}
+            </a>
+        {% endif %}
+        
+        {% if request.user.user_role == 'buyer' %}
+            <a class="list-group-item" 
+               href="{% url 'my_orders' %}" 
+               style="color: #28a745; padding: 1.25rem; border: none; transition: all 0.3s ease; display: flex; align-items: center;"
+               onmouseover="this.style.background='#E6F3FA'; this.style.color='#007bff';"
+               onmouseout="this.style.background='transparent'; this.style.color='#28a745';">
+                <i class="fas fa-box" style="margin-right: 10px; font-size: 1.2rem;"></i>
+                {% trans "My Orders" %}
+            </a>
+        {% endif %}
+
+        {% if request.user.user_role == 'farmer' %}
+            <a class="list-group-item" 
+               href="{% url 'farmer:add_products' %}" 
+               style="color: #28a745; padding: 1.25rem; border: none; transition: all 0.3s ease; display: flex; align-items: center;"
+               onmouseover="this.style.background='#E6F3FA'; this.style.color='#007bff';"
+               onmouseout="this.style.background='transparent'; this.style.color='#28a745';">
+                <i class="fas fa-plus-circle" style="margin-right: 10px; font-size: 1.2rem;"></i>
+                {% trans "Add Products" %}
+            </a>
+            <a class="list-group-item" 
+               href="{% url 'farmer:insights' %}" 
+               style="color: #28a745; padding: 1.25rem; border: none; transition: all 0.3s ease; display: flex; align-items: center;"
+               onmouseover="this.style.background='#E6F3FA'; this.style.color='#007bff';"
+               onmouseout="this.style.background='transparent'; this.style.color='#28a745';">
+                <i class="fas fa-chart-line" style="margin-right: 10px; font-size: 1.2rem;"></i>
+                {% trans "Market Insights" %}
+            </a>
+        {% endif %}
+
+        <a class="list-group-item" 
+           href="{% url 'edit_profile' %}" 
+           style="color: #28a745; padding: 1.25rem; border: none; transition: all 0.3s ease; display: flex; align-items: center;"
+           onmouseover="this.style.background='#E6F3FA'; this.style.color='#007bff';"
+           onmouseout="this.style.background='transparent'; this.style.color='#28a745';">
+            <i class="fas fa-user-edit" style="margin-right: 10px; font-size: 1.2rem;"></i>
+            {% trans "Edit Profile" %}
+        </a>
+        <a class="list-group-item" 
+           href="{% url 'forgot-password' %}" 
+           style="color: #28a745; padding: 1.25rem; border: none; transition: all 0.3s ease; display: flex; align-items: center;"
+           onmouseover="this.style.background='#E6F3FA'; this.style.color='#007bff';"
+           onmouseout="this.style.background='transparent'; this.style.color='#28a745';">
+            <i class="fas fa-lock" style="margin-right: 10px; font-size: 1.2rem;"></i>
+            {% trans "Change Password" %}
+        </a>
+    </ul>
+    <br>
+    <a class="btn btn-light btn-block" 
+       href="{% url 'logout' %}" 
+       style="border-radius: 25px; background: #FFFFFF; color: #007bff; border: 2px solid #00b4db; padding: 0.75rem; font-weight: 500; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;"
+       onmouseover="this.style.background='#00b4db'; this.style.color='white'; this.style.borderColor='#007bff';"
+       onmouseout="this.style.background='#FFFFFF'; this.style.color='#007bff'; this.style.borderColor='#00b4db';">
+        <i class="fa fa-power-off" style="margin-right: 10px; font-size: 1.2rem;"></i>
+        <span class="text">{% trans "Log out" %}</span>
+    </a>
+    <!--   SIDEBAR .//END   -->
+</aside>
+
+<style>
+    .list-group-item {
+        animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+        from { transform: translateX(-20px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+</style>
+
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">

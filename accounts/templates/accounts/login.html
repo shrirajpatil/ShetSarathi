@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<main class="offcanvas-enabled" style="padding-top: 5rem; background: linear-gradient(135deg, #F5F7FA 0%, #BBDEFB 100%);">
+
+  <section class="ps-lg-4 pe-lg-3 pt-4" style="min-height:84vh;">
+
+    <!-- ============================ COMPONENT LOGIN   ================================= -->
+    <div class="card mx-auto" style="max-width: 380px; margin-top:100px; border: none; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border-radius: 15px; overflow: hidden; animation: fadeIn 0.5s ease;">
+      <div class="card-body" style="background: #FFFFFF; padding: 2rem;">
+        <h4 class="card-title mb-4" style="color: #28a745; font-weight: 600; font-size: 1.5rem; text-align: center;">
+          <i class="fas fa-leaf" style="margin-right: 8px;"></i>{% trans "Sign in" %}
+        </h4>
+        {% include "accounts/alert.html" %}
+        <form action="{%url 'login'%}" method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <input type="email" class="form-control" placeholder="{% trans "Email Address" %}" name="email" style="border-color: #28a745; border-radius: 8px; padding: 10px; transition: border-color 0.3s ease, box-shadow 0.3s ease;" onfocus="this.style.borderColor='#007bff'; this.style.boxShadow='0 0 5px rgba(0, 123, 255, 0.5)';" onblur="this.style.borderColor='#28a745'; this.style.boxShadow='none';">
+          </div> <!-- mb-3// -->
+          <div class="mb-3">
+            <input type="password" class="form-control" placeholder="{% trans "Password" %}" name="password" style="border-color: #28a745; border-radius: 8px; padding: 10px; transition: border-color 0.3s ease, box-shadow 0.3s ease;" onfocus="this.style.borderColor='#007bff'; this.style.boxShadow='0 0 5px rgba(0, 123, 255, 0.5)';" onblur="this.style.borderColor='#28a745'; this.style.boxShadow='none';">
+          </div> <!-- mb-3// -->
+
+          <div class="mb-3">
+            <a href="{%url 'forgot-password'%}" class="float-right" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#0056b3';" onmouseout="this.style.color='#007bff';">{% trans "Forgot password?" %}</a>
+          </div> <!-- mb-3 form-check .// -->
+          <div class="mb-3">
+            <button type="submit" class="btn btn-primary btn-block" style="background: linear-gradient(45deg, #007bff, #00b4db); border: none; color: #FFFFFF; padding: 10px; border-radius: 25px; box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); transition: all 0.3s ease;" onmouseover="this.style.background='linear-gradient(45deg, #0056b3, #008bb0)'; this.style.boxShadow='0 6px 15px rgba(0, 123, 255, 0.5)';" onmouseout="this.style.background='linear-gradient(45deg, #007bff, #00b4db)'; this.style.boxShadow='0 4px 10px rgba(0, 123, 255, 0.3)';">{% trans "Login" %}</button>
+          </div> <!-- mb-3// -->
+        </form>
+      </div> <!-- card-body.// -->
+    </div> <!-- card .// -->
+
+    <p class="text-center mt-4" style="color: #28a745; font-weight: 500;">
+      {% trans "Don't have an account?" %} 
+      <a href="{%url 'register'%}" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='#0056b3';" onmouseout="this.style.color='#007bff';">{% trans "Sign up" %}</a>
+    </p>
+    <br><br>
+    <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
+
+  </section>
+
+</main>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+{% endblock content %}

@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% load i18n static cart_tags %}
+{% block content %}
+<main class="offcanvas-enabled" id="main-content" style="padding-top: 8rem;">
+  <section class="ps-lg-4 pe-lg-3 pt-4">
+    <div class="container">
+      {% if not cart_items %}
+      <h2>{% trans "Your Shopping Cart is Empty" %}</h2>
+      <br />
+      <div class="text-center">
+        <a href="{% url 'store:home' %}" class="btn btn-primary" style="background-color: #008000; border-color: #008000;">{% trans "Continue Shopping" %}</a>
+      </div>
+      {% else %}
+      <div class="row">
+        <aside class="col-lg-9">
+          <div class="card">
+            <table class="table table-borderless table-shopping-cart">
+              <thead class="text-muted">
+                <tr class="small text-uppercase">
+                  <th scope="col">{% trans "Product" %}</th>
+                  <th scope="col" width="200" class="text-center">{% trans "Quantity" %}</th>
+                  <th scope="col" width="200" class="text-center">{% trans "Price" %}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for cart_item in cart_items %}
+                <tr {% if cart_item.product.is_bulk_eligible and cart_item.quantity >= cart_item.product.bulk_threshold %}class="bulk-order"{% endif %}>
+                    <td>
+                        <div class="d-block d-sm-flex text-center text-sm-start">
+                            <img src="{{ cart_item.product.image.url }}" width="80" alt="{% trans "Product" %}" class="border border-accent rounded-3">
+                            <h3 class="fs-base mb-2 ps-3" style="line-height: 1.6;"><a>{{ cart_item.product.product_name }}</a></h3>
+                        </div>
+                        <h6>{% trans "In Stock Quantity" %}: <label id="totalqty_{{ forloop.counter0 }}">{{ cart_item.product.quantity }}</label></h6>
+                        {% if cart_item.product.is_bulk_eligible and cart_item.quantity >= cart_item.product.bulk_threshold %}
+                            <p class="text-success">{% trans "Bulk Order" %}</p>
+                            {% if not cart_item.product.bulk_price %}
+                                <a href="{% url 'negotiate_bulk' cart_item.product.id %}" class="btn btn-sm btn-outline-success">{% trans "Propose Price" %}</a>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        <div class="d-flex">
+                            <div class="my-auto">
+                                <a href="{% url 'remove_cart' cart_item.product.id %}" class="btn btn-secondary rounded-circle py-0 px-2">-</a>
+                            </div>
+                            <input type="text" id="txt_qty_{{ forloop.counter0 }}" class="form-control mx-3" value="{{ cart_item.quantity }}" disabled />
+                            <div class="my-auto">
+                                <a href="{% url 'add-cart' cart_item.product.id %}" id="addButton_{{ forloop.counter0 }}" class="btn btn-secondary btn-icon rounded-circle py-0 px-2">+</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="fs-lg text-accent pt-2">Rs {{ cart_item.sub_total }}</div>
+                      {% if cart_item.product.is_bulk_eligible and cart_item.quantity >= cart_item.product.bulk_threshold %}
+                          {% with negotiation=cart_item|lookup:"negotiation" %}
+                          {% if negotiation and negotiation.status == 'Accepted' %}
+                              <small>{% trans "Negotiated Total" %}: Rs {{ negotiation.proposed_price }} {% trans "for" %} {{ cart_item.quantity }}</small>
+                          {% else %}
+                              <small>Rs {{ cart_item.product.bulk_price|default:cart_item.product.price }} {% trans "each" %}</small>
+                          {% endif %}
+                          {% endwith %}
+                      {% else %}
+                          <small>Rs {{ cart_item.product.price }} {% trans "each" %}</small>
+                      {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+          </div>
+        </aside>
+        <aside class="col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <dl class="dlist-align">
+                <dt>{% trans "Total price" %}:</dt>
+                <dd class="text-right">Rs {{ total }}</dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt>{% trans "Transportation Cost" %}:</dt>
+                <dd class="text-right">Rs {{ transport_cost }}</dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt>{% trans "Grand Total" %}:</dt>
+                <dd class="text-right text-dark b">
+                  <strong>Rs {{ grand_total }}</strong>
+                </dd>
+              </dl>
+              <hr />
+              <p class="text-center mb-3">
+                <img src="{% static 'images/misc/payments.png' %}" height="26" />
+              </p>
+              <a class="btn btn-primary btn-shadow d-block w-100 mt-4" href="{% url 'checkout' %}" style="background-color: #008000; border-color: #008000;"><i class="ci-card fs-lg me-2"></i>{% trans "Proceed to Checkout" %}</a>
+              <a class="btn btn-outline-primary btn-shadow d-block w-100 mt-2" href="{% url 'negotiation_status' %}">{% trans "Check Negotiation Status" %}</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+</main>
+
+<style>
+.bulk-order {
+    background-color: #e6ffe6;
+}
+.btn.disabled {
+    background-color: #cccccc;
+    border-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      // Get all table rows (excluding header)
+      const rows = document.querySelectorAll("table tbody tr");
+      rows.forEach((row, index) => {
+          const totalQtyElement = document.getElementById(`totalqty_Rs{index}`);
+          const txtQtyInput = document.getElementById(`txt_qty_Rs{index}`);
+          const addButton = document.getElementById(`addButton_Rs{index}`);
+  
+          if (totalQtyElement && txtQtyInput && addButton) {
+              const stockQuantity = parseInt(totalQtyElement.innerText, 10);
+              const currentQuantity = parseInt(txtQtyInput.value, 10);
+  
+              if (currentQuantity >= stockQuantity) {
+                  addButton.classList.add("disabled");
+              }
+          }
+      });
+  });
+  </script>
+{% endblock content %}

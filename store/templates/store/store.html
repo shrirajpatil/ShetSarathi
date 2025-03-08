@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<main class="offcanvas-enabled" style="padding-top: 4rem;">
+    <section class="ps-lg-4 pe-lg-3 pt-4">
+        <div class="container-fluid">
+            <div class="d-flex flex-row">
+                <!-- Sidebar Filter Section -->
+                <div class="col-lg-3 col-md-4 mb-4">
+                    <div class="card shadow-sm border-0 sticky-top" style="top: 1rem;">
+                        <div class="card-body p-4">
+                            <h5 class="card-title mb-4" style="color: #4CAF50;">{% trans "Filter Products" %}</h5>
+                            <form method="GET" class="row g-3" action="{% url 'store:home' %}">
+                                <div class="col-12">
+                                    <label for="state" class="form-label">{% trans "State" %}:</label>
+                                    <select name="state" class="form-select" id="state">
+                                        <option value="">{% trans "All States" %}</option>
+                                        <option value="Goa" {% if selected_state == "Goa" %}selected{% endif %}>Goa</option>
+                                        <option value="Gujarat" {% if selected_state == "Gujarat" %}selected{% endif %}>Gujarat</option>
+                                        <option value="Maharashtra" {% if selected_state == "Maharashtra" %}selected{% endif %}>Maharashtra</option>
+                                        <option value="Odisha" {% if selected_state == "Odisha" %}selected{% endif %}>Odisha</option>
+                                        <option value="Punjab" {% if selected_state == "Punjab" %}selected{% endif %}>Punjab</option>
+                                        <option value="Rajasthan" {% if selected_state == "Rajasthan" %}selected{% endif %}>Rajasthan</option>
+                                        <option value="Tamil Nadu" {% if selected_state == "Tamil Nadu" %}selected{% endif %}>Tamil Nadu</option>
+                                        <option value="Uttarakhand" {% if selected_state == "Uttarakhand" %}selected{% endif %}>Uttarakhand</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label for="category" class="form-label">{% trans "Category" %}:</label>
+                                    <select name="category" class="form-select" id="category">
+                                        <option value="">{% trans "All Categories" %}</option>
+                                        <option value="fruit" {% if selected_category == "fruit" %}selected{% endif %}>Fruit</option>
+                                        <option value="grain" {% if selected_category == "grain" %}selected{% endif %}>Grain</option>
+                                        <option value="seeds" {% if selected_category == "seeds" %}selected{% endif %}>Seeds</option>
+                                        <option value="vegetables" {% if selected_category == "vegetables" %}selected{% endif %}>Vegetables</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary w-100 mt-3">
+                                        <i class="fas fa-filter me-2"></i>{% trans "Apply Filters" %}
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- Sorting Form -->
+                            <hr class="my-4">
+                            <h5 class="card-title mb-4" style="color: #4CAF50;">{% trans "Sort Products" %}</h5>
+                            <form method="GET" class="row g-3" action="{% url 'store:home' %}">
+                                <input type="hidden" name="state" value="{{ selected_state }}">
+                                <input type="hidden" name="category" value="{{ selected_category }}">
+                                <div class="col-12">
+                                    <label for="sort" class="form-label">{% trans "Sort By" %}:</label>
+                                    <select name="sort" class="form-select" id="sort">
+                                        <option value="new" {% if selected_sort == "new" %}selected{% endif %}>New</option>
+                                        <option value="price_low_to_high" {% if selected_sort == "price_low_to_high" %}selected{% endif %}>Price: Low to High</option>
+                                        <option value="price_high_to_low" {% if selected_sort == "price_high_to_low" %}selected{% endif %}>Price: High to Low</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-secondary w-100 mt-3">
+                                        <i class="fas fa-sort me-2"></i>{% trans "Sort" %}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Section -->
+                <div class="col-lg-9 col-md-8">
+                    <!-- Page Title -->
+                    <h2 class="title-page mb-4" style="color: #4CAF50;">{% trans "Our Store" %}</h2>
+
+                    <!-- Filtered Products -->
+                    {% if filtered_products %}
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <h3 class="mb-4" style="color: #4CAF50;">{{ filtered_products.count }} {% trans "Filtered Items" %}</h3>
+                            </div>
+                        </div>
+
+                        <!-- Filtered Products Grid -->
+                        <div class="row">
+                            {% for product in filtered_products %}
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="card h-100 shadow-sm border-0 product-card">
+                                        <a href="{% url 'product-detail' product.id %}">
+                                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.product_name }}" style="height: 200px; object-fit: cover;">
+                                        </a>
+                                        <div class="card-body">
+                                            <a class="text-muted text-decoration-none" href="#">{{ product.category }}</a>
+                                            <h5 class="card-title mt-2">
+                                                <a href="{% url 'product-detail' product.id %}" class="text-dark text-decoration-none">{{ product.product_name }}</a>
+                                            </h5>
+                                            <p class="text-muted mb-2">Location: {{ product.city }}, {{ product.state }}</p>
+                                            <h5 class="text-success">$ {{ product.price }}</h5>
+                                            {% if request.user.user_role != 'farmer' and request.user.user_role != 'specialist' %}
+                                                <a href="{% url 'add-cart' product.id %}" class="btn btn-outline-primary w-100 mt-3">
+                                                    <i class="fas fa-cart-plus me-2"></i>{% trans "Add to Cart" %}
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <hr class="my-4">
+                    {% endif %}
+
+                    <!-- Unfiltered Products -->
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <h3 class="mb-4" style="color: #4CAF50;">{{ products.count }} {% trans "All Items" %}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% for product in products %}
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="card h-100 shadow-sm border-0 product-card">
+                                    <a href="{% url 'product-detail' product.id %}">
+                                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.product_name }}" style="height: 200px; object-fit: cover;">
+                                    </a>
+                                    <div class="card-body">
+                                        <a class="text-muted text-decoration-none" href="#">{{ product.category }}</a>
+                                        <h5 class="card-title mt-2">
+                                            <a href="{% url 'product-detail' product.id %}" class="text-dark text-decoration-none">{{ product.product_name }}</a>
+                                        </h5>
+                                        <p class="text-muted mb-2">Location: {{ product.city }}, {{ product.state }}</p>
+                                        <h5 class="text-success">Rs {{ product.price }}</h5>
+                                        {% if request.user.user_role != 'farmer' and request.user.user_role != 'specialist' %}
+                                            <a href="{% url 'add-cart' product.id %}" class="btn btn-outline-primary w-100 mt-3">
+                                                <i class="fas fa-cart-plus me-2"></i>{% trans "Add to Cart" %}
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="col-12">
+                                <p class="text-center text-muted">{% trans "No products available" %}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<style>
+    /* Card Hover Effect */
+    .product-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 0.75rem;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(76, 175, 80, 0.2);
+    }
+
+    /* Button Hover Effect */
+    .btn-outline-primary:hover {
+        background-color: #4CAF50;
+        color: white;
+        border-color: #4CAF50;
+    }
+
+    /* Form Styling */
+    .form-select, .form-control {
+        border-radius: 0.5rem;
+        border: 1px solid #ddd;
+    }
+
+    .form-select:focus, .form-control:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    }
+
+    /* Sidebar Styling */
+    .sticky-top {
+        position: sticky;
+        top: 1rem;
+        z-index: 1;
+    }
+
+    /* Flex Layout for Sidebar and Products */
+    .d-flex {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .col-lg-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    .col-lg-9 {
+        flex: 0 0 75%;
+        max-width: 75%;
+    }
+
+    @media (max-width: 992px) {
+        .d-flex {
+            flex-direction: column;
+        }
+
+        .col-lg-3, .col-lg-9 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+</style>
+
+{% endblock content %}

@@ -1,0 +1,7 @@
+{% load i18n %}
+{% autoescape off %}
+  {% trans "Hi" %} {{user.first_name}},
+  {% trans "Your Order has been received" %}
+
+  {% trans "Order Number" %} : {{order.order_number}}
+{% endautoescape %}

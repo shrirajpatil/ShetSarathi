@@ -2,6 +2,8 @@
 
 ShetSarathi is a Virtual Agricultural Marketplace designed to transform agriculture by connecting farmers, specialists, and buyers. Leveraging machine learning and advanced databases, it offers personalized product insights, empowering farmers to make informed decisions. The platform aims to revolutionize the industry by enhancing market access, optimizing decision-making, and contributing to economic stability. ShetSarathi is not just a marketplace; it's a data-driven hub fostering efficiency and sustainability in agriculture.
 
+PPT - https://www.canva.com/design/DAGhHsl72PU/VT80xXI2_HHDmRInwffMdQ/edit?utm_content=DAGhHsl72PU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 ## Features
 
 - **Chatbot**: AI-driven chatbot to assist farmers with queries.

@@ -1,0 +1,568 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+<main class="offcanvas-enabled" style="padding-top: 4rem;">
+    <section class="ps-lg-4 pe-lg-3 pt-4">
+        <div class="px-3 pt-1">
+            <div id="slides-shop" class="cover-slides">
+                <ul class="slides-container">
+                    <li class="text-center">
+                        <img src={% static 'images/farm1.jpg'%} alt="">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h1 class="m-b-20"><strong>{% trans "Welcome To" %} <br> Shetsarathi</strong></h1>
+                                    <p class="m-b-40">{% trans "See how your users experience your website in realtime or view trends to see any changes in performance over time." %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="text-center">
+                        <img src={% static 'images/farm2.jpg'%} alt="">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h1 class="m-b-20"><strong>{% trans "Welcome To" %} <br> Shetsarathi</strong></h1>
+                                    <p class="m-b-40">{% trans "See how your users experience your website in realtime or view trends to see any changes in performance over time." %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="text-center">
+                        <img src={% static 'images/farm3.jpg'%} alt="">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h1 class="m-b-20"><strong>{% trans "Welcome To" %} <br> Shetsarthi</strong></h1>
+                                    <p class="m-b-40">{% trans "See how your users experience your website in realtime or view trends to see any changes in performance over time." %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="slides-navigation">
+                    <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                </div>
+            </div>
+ <!-- Features Section -->
+ <section class="pt-4 mb-5">
+    <h2 class="h2 text-center mb-5 fw-bold" style="color: #2E7D32; letter-spacing: 0.5px;">{% trans "Our Features" %}</h2>
+    
+    <!-- Row 1: 4 Cards -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-5">
+        <div class="col">
+            <div class="card h-100 text-center feature-card shadow-sm">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <div class="icon-circle mb-3">
+                        <i class="fas fa-cloud-sun fa-2x" style="color: #4CAF50;"></i>
+                    </div>
+                    <h5 class="card-title fw-semibold" style="color: #2E7D32;">{% trans "Weather Updates" %}</h5>
+                    <p class="card-text text-muted">{% trans "Stay updated with real-time weather forecasts tailored to your location and crops." %}</p>
+                    <a href="http://localhost:5000/" class="btn btn-success mt-auto px-4 rounded-pill">{% trans "Check Weather" %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-center feature-card shadow-sm">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <div class="icon-circle mb-3">
+                        <i class="fas fa-seedling fa-2x" style="color: #4CAF50;"></i>
+                    </div>
+                    <h5 class="card-title fw-semibold" style="color: #2E7D32;">{% trans "Crop Recommendation" %}</h5>
+                    <p class="card-text text-muted">{% trans "Get recommendations on the best crops to grow based on soil and weather conditions." %}</p>
+                    <a href="http://localhost:7000/" class="btn btn-success mt-auto px-4 rounded-pill">{% trans "Check Recommendation" %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-center feature-card shadow-sm">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <div class="icon-circle mb-3">
+                        <i class="fas fa-bullhorn fa-2x" style="color: #4CAF50;"></i>
+                    </div>
+                    <h5 class="card-title fw-semibold" style="color: #2E7D32;">{% trans "Government Subsidy Updates" %}</h5>
+                    <p class="card-text text-muted">{% trans "Stay updated with the latest government subsidies and financial support programs." %}</p>
+                    <a href="http://localhost:3000" class="btn btn-success mt-auto px-4 rounded-pill">{% trans "Check New Policies" %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-center feature-card shadow-sm">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <div class="icon-circle mb-3">
+                        <i class="fas fa-chart-line fa-2x" style="color: #4CAF50;"></i>
+                    </div>
+                    <h5 class="card-title fw-semibold" style="color: #2E7D32;">{% trans "Real-Time Market Prices" %}</h5>
+                    <p class="card-text text-muted">{% trans "Access live updates on market trends and pricing for better decision-making." %}</p>
+                    <a href="http://localhost:1000" class="btn btn-success mt-auto px-4 rounded-pill">{% trans "Check Live Prices" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row 2: 3 Cards (Centered) -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
+        <div class="col">
+            <div class="card h-100 text-center feature-card shadow-sm">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <div class="icon-circle mb-3">
+                        <i class="fas fa-warehouse fa-2x" style="color: #4CAF50;"></i>
+                    </div>
+                    <h5 class="card-title fw-semibold" style="color: #2E7D32;">{% trans "Warehouse on the Way" %}</h5>
+                    <p class="card-text text-muted">{% trans "Find nearby warehouses to store your produce during transportation." %}</p>
+                    <a href="http://localhost:4000/" class="btn btn-success mt-auto px-4 rounded-pill">{% trans "Check Warehouses" %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-center feature-card shadow-sm">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <div class="icon-circle mb-3">
+                        <i class="fas fa-dollar-sign fa-2x" style="color: #4CAF50;"></i>
+                    </div>
+                    <h5 class="card-title fw-semibold" style="color: #2E7D32;">{% trans "Crop Price Prediction" %}</h5>
+                    <p class="card-text text-muted">{% trans "Predict future crop prices to plan your sales and maximize profits." %}</p>
+                    <a href="http://localhost:9000/" class="btn btn-success mt-auto px-4 rounded-pill">{% trans "Check Price" %}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 text-center feature-card shadow-sm">
+                <div class="card-body d-flex flex-column align-items-center">
+                    <div class="icon-circle mb-3">
+                        <i class="fas fa-book fa-2x" style="color: #4CAF50;"></i>
+                    </div>
+                    <h5 class="card-title fw-semibold" style="color: #2E7D32;">{% trans "Edu-Farm" %}</h5>
+                    <p class="card-text text-muted">{% trans "Provides animated video tutorials, quizzes on Agri-Tech adoption" %}</p>
+                    <a href="http://localhost:2200/" class="btn btn-success mt-auto px-4 rounded-pill">{% trans "Learn More" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+            <!-- Popular Products Section -->
+            <section class="pt-5 pb-4">
+                <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
+                    <h2 class="h3 mb-0 pt-3 me-3" style="color: #4CAF50;">{% trans "Popular Products" %}</h2>
+                    <div class="pt-3"><a class="btn btn-outline-accent btn-sm" href="{% url 'store:home' %}" style="border-color:rgb(242, 244, 240); color: #4CAF50;">{% trans "More products" %}<i class="ci-arrow-right ms-1 me-n1"></i></a></div>
+                </div>
+                <div class="slider-container">
+                    <div class="slider-track">
+                        {% for product in products %}
+                            <div class="product-item">
+                                <div class="products-single fix">
+                                    <a class="card-img-top d-block overflow-hidden" href="{% url 'product-detail' product.id %}">
+                                        <img src="{{product.image.url}}" class="img-fluid" alt="{% trans "Image" %}" style="min-height: 250px; max-height: 250px;">
+                                    </a>
+                                    <div class="why-text">
+                                        <a class="product-meta d-block fs-xs pb-1" href="#">{{product.category}}</a>
+                                        <h4 class="product-title fs-sm text-truncate">
+                                            <a href="{% url 'product-detail' product.id %}">{{product.product_name}}</a>
+                                        </h4>
+                                        <h5 style="color:rgb(0, 7, 0);">Rs. {{product.price}}</h5>
+                                        {% if request.user.user_role != 'farmer' and request.user.user_role != 'specialist' %}
+                                            <a href="{% url 'add-cart' product.id %}" class="cart" style="background:rgb(247, 247, 247); color: #FFFFFF;">+<i class="ci-cart fs-base ms-1"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <!-- Duplicate products for seamless looping -->
+                        {% for product in products %}
+                            <div class="product-item">
+                                <div class="products-single fix">
+                                    <a class="card-img-top d-block overflow-hidden" href="{% url 'product-detail' product.id %}">
+                                        <img src="{{product.image.url}}" class="img-fluid" alt="{% trans "Image" %}" style="min-height: 250px; max-height: 250px;">
+                                    </a>
+                                    <div class="why-text">
+                                        <a class="product-meta d-block fs-xs pb-1" href="#">{{product.category}}</a>
+                                        <h4 class="product-title fs-sm text-truncate">
+                                            <a href="{% url 'product-detail' product.id %}">{{product.product_name}}</a>
+                                        </h4>
+                                        <h5 style="color: #4CAF50;">Rs. {{product.price}}</h5>
+                                        {% if request.user.user_role != 'farmer' and request.user.user_role != 'specialist' %}
+                                            <a href="{% url 'add-cart' product.id %}" class="cart" style="background: #8BC34A; color: #FFFFFF;">+<i class="ci-cart fs-base ms-1"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+
+            {% comment %} <!-- Recommended Products Section (for buyers) -->
+            {% if request.user.user_role == 'buyer' %}
+                <section class="pt-5 pb-4">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center pt-1 border-bottom pb-4 mb-4">
+                        <h2 class="h3 mb-0 pt-3 me-3">{% trans "Recommended Products" %}</h2>
+                    </div>
+                    <div class="row">
+                        {% for product in recommended_products %}
+                            <div class="col-lg-3 col-md-6 special-grid">
+                                <div class="products-single fix">
+                                    <a class="card-img-top d-block overflow-hidden" href="{% url 'product-detail' product.id %}">
+                                        <img src="{{ product.image.url }}" class="img-fluid" alt="{% trans "Image" %}" style="min-height: 250px; max-height: 250px;">
+                                    </a>
+                                    <div class="why-text">
+                                        <a class="product-meta d-block fs-xs pb-1" href="#">{{ product.category }}</a>
+                                        <h4 class="product-title fs-sm text-truncate">
+                                            <a href="{% url 'product-detail' product.id %}">{{ product.product_name }}</a>
+                                        </h4>
+                                        <h5>Rs. {{ product.price }}</h5>
+                                        {% if request.user.user_role != 'farmer' and request.user.user_role != 'specialist' %}
+                                            <a href="{% url 'add-cart' product.id %}" class="cart">+<i class="ci-cart fs-base ms-1"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endif %} {% endcomment %}
+
+            <!-- Voice Command Controls -->
+            <div class="voice-command-container text-center mb-4">
+                <div class="voice-control-box">
+                    <button id="start-voice" class="voice-btn"><i class="fas fa-microphone"></i> Start Voice</button>
+                    <button id="toggle-lang" class="lang-btn ml-2"><i class="fas fa-globe"></i> Marathi</button>
+                    <p id="voice-status" class="voice-status mt-2">Current Language: English</p>
+                </div>
+            </div>
+            
+            <!-- Include FontAwesome for icons -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+            
+            <style>
+                .voice-command-container {
+                    padding: 15px;
+                    background: linear-gradient(135deg, #f7f9fc 0%, #e9ecef 100%);
+                    border-radius: 12px;
+                    max-width: 450px;
+                    margin: 0 auto;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                }
+            
+                .voice-control-box {
+                    padding: 15px;
+                    background: #ffffff;
+                    border-radius: 10px;
+                    transition: box-shadow 0.3s ease;
+                }
+            
+                .voice-control-box:hover {
+                    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+                }
+            
+                .voice-btn, .lang-btn {
+                    padding: 10px 18px;
+                    font-size: 0.95rem;
+                    font-weight: 500;
+                    border-radius: 8px;
+                    border: none;
+                    transition: all 0.3s ease;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    cursor: pointer;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+            
+                .voice-btn {
+                    background: #2e7d32; /* Darker, professional green */
+                    color: #ffffff;
+                }
+            
+                .voice-btn:hover {
+                    background: #388e3c;
+                    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+                    transform: translateY(-2px);
+                }
+            
+                .lang-btn {
+                    background: transparent;
+                    color: #2e7d32;
+                    border: 1px solid rgba(46, 125, 50, 0.3);
+                }
+            
+                .lang-btn:hover {
+                    background: #2e7d32;
+                    color: #ffffff;
+                    border-color: #2e7d32;
+                    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+                    transform: translateY(-2px);
+                }
+            
+                .voice-status {
+                    font-size: 0.9rem;
+                    color: #37474f; /* Darker gray for professionalism */
+                    font-weight: 400;
+                    margin-top: 12px;
+                    transition: color 0.3s ease;
+                }
+            
+                .voice-status:hover {
+                    color: #2e7d32;
+                }
+            
+                .ml-2 {
+                    margin-left: 8px;
+                }
+            </style>
+
+            <div class="pb-3"></div>
+            <div class="pb-3"></div>
+
+            <!-- ALL JS FILES -->
+            <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+            <script src="{% static 'js/popper.min.js' %}"></script>
+            <script src="{% static 'js/bootstrap.min.js' %}"></script>
+            <!-- ALL PLUGINS -->
+            <script src="{% static 'js/jquery.superslides.min.js' %}"></script>
+            <script src="{% static 'js/bootstrap-select.js' %}"></script>
+            <script src="{% static 'js/inewsticker.js' %}"></script>
+            <script src="{% static 'js/bootsnav.js' %}"></script>
+            <script src="{% static 'js/images-loded.min.js' %}"></script>
+            <script src="{% static 'js/isotope.min.js' %}"></script>
+            <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+            <script src="{% static 'js/baguetteBox.min.js' %}"></script>
+            <script src="{% static 'js/form-validator.min.js' %}"></script>
+            <script src="{% static 'js/contact-form-script.js' %}"></script>
+            <script src="{% static 'js/custom.js' %}"></script>
+
+            <!-- Voice Recognition Script with Number Commands -->
+            <script>
+                // Check if the browser supports the Web Speech API
+                window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+                if (window.SpeechRecognition) {
+                    const recognition = new SpeechRecognition();
+                    recognition.continuous = false; // Stop after one command
+                    recognition.interimResults = false; // Only final results
+                    let currentLang = 'en-US'; // Default language: English
+
+                    const voiceStatus = document.getElementById('voice-status');
+                    const startButton = document.getElementById('start-voice');
+                    const toggleLangButton = document.getElementById('toggle-lang');
+
+                    // Toggle language between English and Marathi
+                    toggleLangButton.addEventListener('click', () => {
+                        if (currentLang === 'en-US') {
+                            currentLang = 'mr-IN'; // Switch to Marathi
+                            toggleLangButton.textContent = 'Switch to English';
+                            voiceStatus.textContent = 'Current Language: Marathi';
+                        } else {
+                            currentLang = 'en-US'; // Switch to English
+                            toggleLangButton.textContent = 'Switch to Marathi';
+                            voiceStatus.textContent = 'Current Language: English';
+                        }
+                        recognition.lang = currentLang;
+                    });
+
+                    // Start recognition when the button is clicked
+                    startButton.addEventListener('click', () => {
+                        recognition.lang = currentLang; // Set the current language
+                        recognition.start();
+                        voiceStatus.textContent = 'Listening... Please say a command or number.';
+                    });
+
+                    // Handle the result of the voice input
+                    recognition.onresult = (event) => {
+                        const transcript = event.results[0][0].transcript.toLowerCase().trim();
+                        voiceStatus.textContent = `You said: "${transcript}"`;
+
+                        // English Commands
+                        if (currentLang === 'en-US') {
+                            // Number-based commands
+                            if (transcript === '1' || transcript === 'one') {
+                                window.location.href = '{% url "store:home" %}'; // Marketplace
+                            } else if (transcript === '2' || transcript === 'two') {
+                                window.location.href = 'http://localhost:5000/'; // Weather
+                            } else if (transcript === '3' || transcript === 'three') {
+                                window.location.href = 'http://localhost:7000/'; // Recommendation
+                            } else if (transcript === '4' || transcript === 'four') {
+                                window.location.href = 'http://localhost:3000/'; // Subsidies
+                            } else if (transcript === '5' || transcript === 'five') {
+                                window.location.href = 'http://localhost:1000/'; // Prices
+                            } else if (transcript === '6' || transcript === 'six') {
+                                window.location.href = 'http://localhost:4000/'; // Warehouses
+                            } else if (transcript === '7' || transcript === 'seven') {
+                                window.location.href = 'http://localhost:9000/'; // Price Prediction
+                            } 
+                            // Original text commands
+                            else if (transcript.includes('open marketplace')) {
+                                window.location.href = '{% url "store:home" %}';
+                            } else if (transcript.includes('check weather')) {
+                                window.location.href = 'http://localhost:5000/';
+                            } else if (transcript.includes('check recommendation')) {
+                                window.location.href = 'http://localhost:7000/';
+                            } else if (transcript.includes('check subsidies') || transcript.includes('check policies')) {
+                                window.location.href = 'http://localhost:3000/';
+                            } else if (transcript.includes('check prices')) {
+                                window.location.href = 'http://localhost:1000/';
+                            } else if (transcript.includes('check warehouses')) {
+                                window.location.href = 'http://localhost:4000/';
+                            } else if (transcript.includes('predict prices') || transcript.includes('check price prediction')) {
+                                window.location.href = 'http://localhost:9000/';
+                            } else {
+                                voiceStatus.textContent = `Command not recognized: "${transcript}"`;
+                            }
+                        } 
+                        // Marathi Commands
+                        else if (currentLang === 'mr-IN') {
+                            // Number-based commands
+                            if (transcript === '१' || transcript === 'एक') {
+                                window.location.href = '{% url "store:home" %}'; // Marketplace
+                            } else if (transcript === '२' || transcript === 'दोन') {
+                                window.location.href = 'http://localhost:5000/'; // Weather
+                            } else if (transcript === '३' || transcript === 'तीन') {
+                                window.location.href = 'http://localhost:7000/'; // Recommendation
+                            } else if (transcript === '४' || transcript === 'चार') {
+                                window.location.href = 'http://localhost:3000/'; // Subsidies
+                            } else if (transcript === '५' || transcript === 'पाच') {
+                                window.location.href = 'http://localhost:1000/'; // Prices
+                            } else if (transcript === '६' || transcript === 'सहा') {
+                                window.location.href = 'http://localhost:4000/'; // Warehouses
+                            } else if (transcript === '७' || transcript === 'सात') {
+                                window.location.href = 'http://localhost:9000/'; // Price Prediction
+                            } 
+                            // Original text commands
+                            else if (transcript.includes('मार्केटप्लेस उघडा') || transcript.includes('बाजार उघडा')) {
+                                window.location.href = '{% url "store:home" %}';
+                            } else if (transcript.includes('हवामान तपासा')) {
+                                window.location.href = 'http://localhost:5000/';
+                            } else if (transcript.includes('शिफारस तपासा') || transcript.includes('पिकाची शिफारस')) {
+                                window.location.href = 'http://localhost:7000/';
+                            } else if (transcript.includes('अनुदान तपासा') || transcript.includes('धोरणे तपासा')) {
+                                window.location.href = 'http://localhost:3000/';
+                            } else if (transcript.includes('किंमती तपासा') || transcript.includes('बाजार भाव')) {
+                                window.location.href = 'http://localhost:1000/';
+                            } else if (transcript.includes('गोदामे तपासा')) {
+                                window.location.href = 'http://localhost:4000/';
+                            } else if (transcript.includes('किंमत अंदाज') || transcript.includes('भाव अंदाज')) {
+                                window.location.href = 'http://localhost:9000/';
+                            } else {
+                                voiceStatus.textContent = `आदेश ओळखला नाही: "${transcript}"`;
+                            }
+                        }
+                    };
+
+                    // Handle errors
+                    recognition.onerror = (event) => {
+                        voiceStatus.textContent = `Error occurred: ${event.error}`;
+                    };
+
+                    // When recognition ends
+                    recognition.onend = () => {
+                        voiceStatus.textContent = `Voice recognition stopped. Current Language: ${currentLang === 'en-US' ? 'English' : 'Marathi'}. Click to start again.`;
+                    };
+                } else {
+                    document.getElementById('voice-status').textContent = 'Sorry, your browser does not support voice recognition.';
+                }
+            </script>
+        </div>
+    </section>
+</main>
+
+<style>
+    .feature-card {
+        background: linear-gradient(135deg, #FFFFFF 0%, #F5F7F5 100%);
+        border: 2px solid #8BC34A;
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+    .feature-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+    }
+
+    .feature-card .card-body {
+        padding: 1.5rem;
+    }
+
+    .feature-card .card-title {
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .feature-card .card-text {
+        font-size: 0.9rem;
+        color: #333;
+    }
+
+    .slider-container {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .slider-track {
+        display: flex;
+        gap: 20px;
+        animation: slide 20s linear infinite;
+        white-space: nowrap;
+    }
+
+    .product-item {
+        flex: 0 0 250px;
+        min-width: 250px;
+        background: #FFFFFF;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        display: inline-block;
+    }
+
+    .product-item:hover {
+        transform: scale(1.05);
+    }
+
+    .products-single.fix {
+        margin: 0;
+        padding: 0;
+    }
+
+    .why-text {
+        padding: 10px;
+        text-align: center;
+    }
+
+    @keyframes slide {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .slider-container:hover .slider-track {
+        animation-play-state: paused;
+    }
+
+    .ml-2 {
+        margin-left: 10px;
+    }
+</style>
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<main class="offcanvas-enabled" style="padding-top: 4rem; background: linear-gradient(135deg, #F8F9FA 0%, #E6F0FA 100%);">
+    <section class="ps-lg-4 pe-lg-3 pt-4">
+        <div class="container">
+            <!-- About Section -->
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6">
+                    <div class="banner-frame"> 
+                        <img class="img-fluid rounded shadow" src="{% static 'images/about-img.jpg' %}" alt="About Shetsarathi" style="border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)';" onmouseout="this.style.transform='scale(1)';">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="display-4 text-primary font-weight-bold mb-3" style="color: #007bff; font-weight: 700; font-family: 'Arial', sans-serif; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                        {% trans "Welcome to" %} <span class="text-success" style="color: #28a745;">Shetsarathi</span>
+                    </h2>
+                    <p class="lead text-muted" style="font-size: 1.1rem; line-height: 1.6; font-family: 'Arial', sans-serif; color: #7F8C8D;">
+                        {% trans "Shetsarathi is a revolutionary platform designed to empower farmers and bridge the gap between agricultural producers and consumers. With features like weather notifications, chatbots for instant assistance, distance calculators, and optimal route finders, we aim to modernize agriculture and improve productivity. Shetsarathi ensures efficient distribution, transparent pricing, and better opportunities for everyone in the agricultural ecosystem." %}
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Features Section -->
+            <div class="row text-center mb-5">
+                <div class="col-12 mb-4">
+                    <h2 class="text-primary font-weight-bold" style="color: #007bff; font-weight: 700; font-size: 2rem; font-family: 'Arial', sans-serif; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                        <i class="fas fa-tools me-2"></i>{% trans "Our Features" %}
+                    </h2>
+                </div>
+                <div class="row gy-4">
+
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="feature-box p-5 rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="icon mb-3 text-success" style="color: #28a745;">
+                                <i class="fas fa-truck fa-3x"></i>
+                            </div>
+                            <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Transportation & Warehouse Finder" %}</h4>
+                            <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Distance-based cost estimates and warehouse locations for better planning." %}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="feature-box p-5 rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="icon mb-3 text-success" style="color: #28a745;">
+                                <i class="fas fa-handshake fa-3x"></i>
+                            </div>
+                            <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Bulk Order Negotiation" %}</h4>
+                            <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Negotiate bulk orders directly for better pricing and deals." %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 2: Real-time Market Prices -->
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="feature-box p-5 rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="icon mb-3 text-success" style="color: #28a745;">
+                                <i class="fas fa-dollar-sign fa-3x"></i>
+                            </div>
+                            <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Real-time Market Prices" %}</h4>
+                            <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Live updates to ensure fair trade and informed decisions." %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 3: AI Chatbot in Multiple Languages -->
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="feature-box p-5 rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="icon mb-3 text-success" style="color: #28a745;">
+                                <i class="fas fa-robot fa-3x"></i>
+                            </div>
+                            <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "KrishiBot" %}</h4>
+                            <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Instant assistance in English and Marathi, available 24/7." %}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="feature-box p-5 rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="icon mb-3 text-success" style="color: #28a745;">
+                                <i class="fas fa-shopping-basket fa-3x"></i>
+                            </div>
+                            <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Marketplace for Farmers, Buyers & Specialists" %}</h4>
+                            <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Direct buying and selling, eliminating middlemen for fairer trade." %}</p>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="feature-box p-5 rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="icon mb-3 text-success" style="color: #28a745;">
+                                <i class="fas fa-users fa-3x"></i>
+                            </div>
+                            <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Community Forum" %}</h4>
+                            <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "A space to share experiences and solutions with fellow farmers." %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 4: Crop Prediction -->
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="feature-box p-5 rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="icon mb-3 text-success" style="color: #28a745;">
+                                <i class="fas fa-seedling fa-3x"></i>
+                            </div>
+                            <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Crop Recommendation" %}</h4>
+                            <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "AI-driven insights on the best crops to grow based on local data." %}</p>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Feature 5: Weather Updates -->
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="feature-box p-5 rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="icon mb-3 text-success" style="color: #28a745;">
+                                <i class="fas fa-cloud fa-3x"></i>
+                            </div>
+                            <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Weather Updates" %}</h4>
+                            <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Real-time forecasts for smarter farming decisions." %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 6: Subsidy & Policy Alerts via SMS -->
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="feature-box p-5 rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="icon mb-3 text-success" style="color: #28a745;">
+                                <i class="fas fa-bell fa-3x"></i>
+                            </div>
+                            <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Subsidy & Policy Alerts via SMS" %}</h4>
+                            <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Stay informed about government benefits and policies via SMS." %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 8: Mentorship for Farmers -->
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="feature-box p-5 rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="icon mb-3 text-success" style="color: #28a745;">
+                                <i class="fas fa-chalkboard-teacher fa-3x"></i>
+                            </div>
+                            <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Mentorship for Farmers" %}</h4>
+                            <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Guidance from experts to improve yields and practices." %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 9: Community Forum -->
+
+
+                    <!-- Feature 10: Crop Price Prediction -->
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="feature-box p-5 rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="icon mb-3 text-success" style="color: #28a745;">
+                                <i class="fas fa-chart-bar fa-3x"></i>
+                            </div>
+                            <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Crop Price Prediction" %}</h4>
+                            <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "AI-powered insights for strategic future planning." %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Feature 11: Bulk Order Negotiation -->
+
+                </div>
+            </div>
+
+            <!-- Trust Section -->
+            <div class="row mb-5">
+                <div class="col-12 mb-4 text-center">
+                    <h2 class="text-primary font-weight-bold" style="color: #007bff; font-weight: 700; font-size: 2rem; font-family: 'Arial', sans-serif; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                        <i class="fas fa-handshake me-2"></i>{% trans "Why Choose Us?" %}
+                    </h2>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box p-4 text-center rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <h3 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.5rem; font-family: 'Arial', sans-serif;">{% trans "We are Trusted" %}</h3>
+                        <p style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Farmers and buyers trust Shetsarathi for its commitment to transparency and reliability. We ensure seamless transactions and dependable services, fostering trust across the agricultural community." %}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box p-4 text-center rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <h3 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.5rem; font-family: 'Arial', sans-serif;">{% trans "We are Professional" %}</h3>
+                        <p style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Our platform combines modern technology with agricultural expertise. With a dedicated team, Shetsarathi ensures a professional experience for all users." %}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box p-4 text-center rounded shadow bg-light" style="transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <h3 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.5rem; font-family: 'Arial', sans-serif;">{% trans "We are Expert" %}</h3>
+                        <p style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Backed by a team with deep agricultural knowledge, Shetsarathi provides expert insights and tools to help farmers and buyers make informed decisions." %}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meet Our Team Section -->
+            <div class="row mb-5">
+                <div class="col-12 mb-4 text-center">
+                    <h2 class="text-primary font-weight-bold" style="color: #007bff; font-weight: 700; font-size: 2rem; font-family: 'Arial', sans-serif; text-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                        <i class="fas fa-users me-2"></i>{% trans "Meet Our Team" %}
+                    </h2>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="team-member text-center" style="transition: transform 0.3s ease;">
+                        <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Shriraj Patil" %}</h4>
+                        <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Full-Stack Developer" %}</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="team-member text-center" style="transition: transform 0.3s ease;">
+                        <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Sharvari Kulkarni" %}</h4>
+                        <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "UI/UX Designer" %}</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="team-member text-center" style="transition: transform 0.3s ease;">
+                        <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Asavari Bhelawe" %}</h4>
+                        <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Backend Developer" %}</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="team-member text-center" style="transition: transform 0.3s ease;">
+                        <h4 class="text-success font-weight-bold" style="color: #28a745; font-weight: 600; font-size: 1.2rem; font-family: 'Arial', sans-serif;">{% trans "Rahul Deoghare" %}</h4>
+                        <p class="text-muted" style="font-size: 0.95rem; font-family: 'Arial', sans-serif; color: #7F8C8D;">{% trans "Data Scientist" %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<style>
+    /* Feature Box Hover Effect */
+    .feature-box {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(40,167,69,0.15);
+    }
+
+    /* Info Box Hover Effect */
+    .info-box {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .info-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(40,167,69,0.15);
+    }
+
+    /* Team Member Hover Effect */
+    .team-member {
+        transition: transform 0.3s ease;
+    }
+    .team-member:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Image Hover Effect */
+    .banner-frame img:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Grid Layout Adjustments */
+    .row.gy-4 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+    .col-md-4 {
+        flex: 0 0 calc(33.333% - 1rem);
+        max-width: calc(33.333% - 1rem);
+    }
+    @media (max-width: 992px) {
+        .col-md-4 {
+            flex: 0 0 calc(50% - 1rem);
+            max-width: calc(50% - 1rem);
+        }
+    }
+    @media (max-width: 768px) {
+        .col-md-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate__animated.animate__fadeInUp {
+        animation: fadeInUp 0.5s ease-out;
+    }
+</style>
+
+{% endblock content %}

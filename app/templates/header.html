@@ -1,0 +1,214 @@
+{% load static %}
+{% load i18n %}
+
+<header class="header bg-white shadow-sm fixed-top" data-fixed-element>
+    <div class="navbar navbar-expand-lg navbar-light py-2">
+        <div class="container-fluid px-4">
+            <!-- Brand Name -->
+            <a class="navbar-brand me-4" href="{% url 'home' %}">
+                <span class="fs-3 fw-bold" style="color: #2e7d32; letter-spacing: 0.5px;">{% trans "Shetsarathi" %}</span>
+            </a>
+
+            <!-- Navbar Toggler for Mobile -->
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#sideNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link mx-3" href="{% url 'store:home' %}">{% trans "Marketplace" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-3" href="{% url 'about' %}">{% trans "Our Story" %}</a>
+                    </li>
+                    {% if request.user.is_authenticated and request.user.user_role == 'farmer' %}
+                        <li class="nav-item">
+                            <a class="nav-link mx-3" href="{% url 'community_home' %}">{% trans "Community" %}</a>
+                        </li>
+                    {% endif %}
+                </ul>
+
+                <!-- Search Form -->
+                <form class="d-flex mx-4 search-form" action="" method="GET">
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-end-0">
+                            <i class="ci-search"></i>
+                        </span>
+                        <input name="q" class="form-control border-start-0" type="text" placeholder="{% trans 'Search for products' %}" value="{{ request.GET.q }}">
+                    </div>
+                </form>
+
+                <!-- Language Selector -->
+                <form action="{% url 'set_language' %}" method="post" class="d-flex align-items-center ms-3">
+                    {% csrf_token %}
+                    <select name="language" class="form-select language-select me-2">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                                {{ language.name_local }} ({{ language.code }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm">{% trans "Go" %}</button>
+                </form>
+
+                <!-- User Actions -->
+                <div class="navbar-toolbar d-flex align-items-center ms-4">
+                    {% if user.is_authenticated %}
+                        <!-- Cart Icon -->
+                        <a class="navbar-tool me-4" href="{% url 'cart' %}">
+                            <span class="navbar-tool-label badge bg-danger">{{ cart_count }}</span>
+                            <i class="navbar-tool-icon ci-cart"></i>
+                        </a>
+                        <!-- My Account -->
+                        <a class="btn btn-primary btn-sm rounded-pill" href="{% url 'dashbord' %}">
+                            <i class="ci-user me-1"></i>{% trans "My Account" %}
+                        </a>
+                    {% else %}
+                        <!-- Login Button -->
+                        <a class="btn btn-primary btn-sm rounded-pill" href="{% url 'login' %}">
+                            <i class="ci-user me-1"></i>{% trans "My Account" %}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<style>
+    .header {
+        border-bottom: 1px solid #e9ecef;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar {
+        padding: 0.75rem 0;
+    }
+
+    .navbar-brand {
+        font-family: 'Poppins', sans-serif; /* Modern font */
+        transition: color 0.3s ease;
+    }
+
+    .navbar-brand:hover {
+        color: #388e3c !important; /* Slightly lighter green on hover */
+    }
+
+    .navbar-toggler {
+        padding: 0.5rem;
+    }
+
+    .nav-link {
+        color: #37474f;
+        font-weight: 500;
+        font-size: 0.95rem;
+        padding: 0.5rem 0;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #2e7d32; /* Matches brand color */
+    }
+
+    /* Search Form */
+    .search-form {
+        width: 35%;
+        max-width: 400px;
+    }
+
+    .input-group {
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        transition: border-color 0.3s ease;
+    }
+
+    .input-group:hover,
+    .input-group:focus-within {
+        border-color: #2e7d32;
+    }
+
+    .input-group-text {
+        border: none;
+        color: #6c757d;
+    }
+
+    .form-control {
+        border: none;
+        font-size: 0.9rem;
+        padding: 0.5rem;
+        box-shadow: none;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        color: #2e7d32;
+    }
+
+    /* Language Selector */
+    .language-select {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        background: #fff;
+        color: #37474f;
+        max-width: 150px;
+    }
+
+    .language-select:focus {
+        border-color: #2e7d32;
+        box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
+    }
+
+    .btn-primary {
+        background: #2e7d32;
+        border: none;
+        padding: 0.4rem 1rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        background: #388e3c;
+        transform: translateY(-2px);
+    }
+
+    /* User Actions */
+    .navbar-tool {
+        position: relative;
+        color: #37474f;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .navbar-tool:hover {
+        color: #2e7d32;
+    }
+
+    .navbar-tool-label {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        font-size: 0.75rem;
+        padding: 2px 5px;
+    }
+
+    .navbar-tool-icon {
+        font-size: 1.25rem;
+    }
+
+    .btn-sm.rounded-pill {
+        padding: 0.4rem 1.25rem;
+        font-size: 0.9rem;
+    }
+
+    .ci-user {
+        font-size: 1rem;
+    }
+</style>

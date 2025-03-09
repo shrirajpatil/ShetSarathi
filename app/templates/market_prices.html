@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Live Market Prices</h2>
+<p><strong>Your Location:</strong> {{ city }}</p>
+
+<h3>Your Products</h3>
+<table border="1">
+    <tr>
+        <th>Product</th>
+        <th>Price (₹)</th>
+    </tr>
+    {% for product in farmer_products %}
+    <tr>
+        <td>{{ product.product_name }}</td>
+        <td>{{ product.price }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="2">No products found.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

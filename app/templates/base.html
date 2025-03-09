@@ -1,0 +1,476 @@
+<!DOCTYPE HTML>
+{% load static %}
+{% load i18n %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="max-age=604800" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% trans "AgroPlace" %}</title>
+
+    <link href="{% static 'css/theme.min.css' %}" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" >
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}" >
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" >
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplebar/5.3.9/simplebar.min.js"
+        integrity="sha512-xAAb5tNhb12Tx88hMa8IdJI+3pzHBk4V4sQ4w8FIFkXEvlh1PYYma0oPnIENPYeLeblWavY7AlkJj3XzJlif0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@16.1.3/dist/smooth-scroll.polyfills.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="{% static 'js/theme.min.js' %}"></script>
+</head>
+
+<body class="bg-secondary">
+    {% include "header.html" %}
+    <div style="padding-bottom: 4rem; background-color: whitesmoke;">
+        {% block content %}{% endblock content %}
+    </div>
+    {% include "footer.html" %}
+
+    <a href="#" id="back-to-top" title="Back to top" style="display: none;">↑</a>
+
+    <div id="chatbot-icon">
+        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+    </div>
+    
+    <!-- Chatbot Widget -->
+    <div id="chatbot-widget">
+        <div id="chatbot-header">
+            <div class="header-content">
+                <span class="status-dot"></span>
+                <h5>{% trans "KrishiBot" %}</h5>
+            </div>
+            <div class="language-switch">
+                <label class="switch">
+                    <input type="checkbox" id="lang-toggle" onchange="toggleLanguage()">
+                    <span class="slider">EN | MR</span>
+                </label>
+            </div>
+            <span class="close-btn" onclick="closeChatbot(event)">×</span>
+        </div>
+        <div id="chatbot-body">
+            <div id="chat-messages">
+                <!-- Predefined welcome message will be added via JavaScript -->
+            </div>
+            <div id="typing-indicator" style="display: none;">
+                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <form id="chat-form" method="post" action="{% url 'openai_chatbot:chat' %}">
+                {% csrf_token %}
+                <input type="text" name="message" id="chat-input" placeholder="{% trans 'Type your message...' %}" autocomplete="off">
+                <button type="submit" id="send-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Chatbot CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    
+        #chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: linear-gradient(135deg, #28a745, #219653);
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+    
+        #chatbot-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+    
+        #chatbot-widget {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 360px;
+            height: 500px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+    
+        #chatbot-widget.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+    
+        #chatbot-header {
+            background: linear-gradient(135deg, #28a745, #219653);
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+    
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #2ecc71;
+            border-radius: 50%;
+            display: inline-block;
+        }
+    
+        #chatbot-header h5 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+    
+        .language-switch {
+            display: flex;
+            align-items: center;
+        }
+    
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+    
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+    
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #219653;
+            transition: 0.4s;
+            border-radius: 24px;
+            text-align: center;
+            line-height: 24px;
+            font-size: 12px;
+            color: #fff;
+        }
+    
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+    
+        input:checked + .slider {
+            background-color: #28a745;
+        }
+    
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    
+        .close-btn {
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+    
+        .close-btn:hover {
+            color: #e74c3c;
+        }
+    
+        #chatbot-body {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 60px);
+            background: #f5f6f8;
+            padding: 20px;
+        }
+    
+        #chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-bottom: 10px;
+        }
+    
+        #chat-messages .message {
+            display: flex;
+            align-items: flex-start;
+            margin: 12px 0;
+            animation: fadeIn 0.3s ease;
+        }
+    
+        #chat-messages .message.user {
+            justify-content: flex-end;
+        }
+    
+        #chat-messages .message .content {
+            padding: 12px 16px;
+            border-radius: 16px;
+            max-width: 70%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    
+        #chat-messages .message.user .content {
+            background: #28a745;
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+    
+        #chat-messages .message.ai .content {
+            background: #ffffff;
+            color: #2c3e50;
+            border-bottom-left-radius: 4px;
+        }
+    
+        #chat-messages .message .timestamp {
+            font-size: 10px;
+            color: #7f8c8d;
+            margin-top: 4px;
+            text-align: right;
+        }
+    
+        #chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+    
+        #chat-messages::-webkit-scrollbar-thumb {
+            background: #28a745;
+            border-radius: 10px;
+        }
+    
+        #chat-messages::-webkit-scrollbar-track {
+            background: #ebedf0;
+        }
+    
+        #typing-indicator {
+            padding: 10px 0;
+            display: flex;
+            gap: 6px;
+        }
+    
+        #typing-indicator .dot {
+            width: 8px;
+            height: 8px;
+            background: #bdc3c7;
+            border-radius: 50%;
+            animation: bounce 1.2s infinite;
+        }
+    
+        #typing-indicator .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+    
+        #typing-indicator .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+    
+        #chat-form {
+            display: flex;
+            gap: 10px;
+            padding-top: 10px;
+            background: #f5f6f8;
+        }
+    
+        #chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 25px;
+            background: #fff;
+            outline: none;
+            font-size: 14px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+    
+        #chat-input:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 8px rgba(40, 167, 69, 0.2);
+        }
+    
+        #send-btn {
+            padding: 12px;
+            background: #28a745;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+    
+        #send-btn:hover {
+            background: #219653;
+            transform: scale(1.05);
+        }
+    
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+    </style>
+    
+    <!-- Chatbot JavaScript -->
+    <script>
+        let currentLanguage = 'en'; // Default language is English
+    
+        // Function to update UI based on language
+        function updateLanguageUI() {
+            const messages = document.getElementById('chat-messages');
+            const chatInput = document.getElementById('chat-input');
+            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+            const welcomeText = currentLanguage === 'mr' 
+                ? 'कृषिबॉट मध्ये आपले स्वागत आहे' 
+                : 'Welcome to KrishiBot';
+            
+            const placeholderText = currentLanguage === 'mr' 
+                ? 'आपला संदेश टाइप करा...' 
+                : 'Type your message...';
+    
+            // Update welcome message only if it's the initial load or language changed
+            if (messages.children.length === 0 || messages.children[0].classList.contains('welcome')) {
+                messages.innerHTML = `
+                    <div class="message ai welcome">
+                        <div class="content">${welcomeText}</div>
+                        <div class="timestamp">${timestamp}</div>
+                    </div>`;
+            }
+    
+            // Update placeholder
+            chatInput.placeholder = placeholderText;
+        }
+    
+        // Toggle language between English and Marathi
+        function toggleLanguage() {
+            const toggle = document.getElementById('lang-toggle');
+            currentLanguage = toggle.checked ? 'mr' : 'en';
+            updateLanguageUI();
+        }
+    
+        // Show widget and welcome message when icon is clicked
+        document.getElementById('chatbot-icon').addEventListener('click', function() {
+            const widget = document.getElementById('chatbot-widget');
+            if (!widget.classList.contains('active')) {
+                widget.classList.add('active');
+                updateLanguageUI(); // Show welcome message and set UI on first open
+            } else {
+                widget.classList.remove('active');
+            }
+        });
+    
+        function closeChatbot(event) {
+            event.stopPropagation();
+            document.getElementById('chatbot-widget').classList.remove('active');
+        }
+    
+        document.getElementById('chat-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+    
+            const messages = document.getElementById('chat-messages');
+            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+            messages.innerHTML += `
+                <div class="message user">
+                    <div class="content">${message}</div>
+                    <div class="timestamp">${timestamp}</div>
+                </div>`;
+            messages.scrollTop = messages.scrollHeight;
+            input.value = '';
+    
+            const typingIndicator = document.getElementById('typing-indicator');
+            typingIndicator.style.display = 'flex';
+    
+            fetch("{% url 'openai_chatbot:chat' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: 'message=' + encodeURIComponent(message)
+            })
+            .then(response => response.json())
+            .then(data => {
+                typingIndicator.style.display = 'none';
+                const aiTimestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                let response = data.response || (currentLanguage === 'mr' ? 'क्षमा करा, मी ते समजू शकलो नाही.' : 'Sorry, I couldn’t process that.');
+                response = response.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                messages.innerHTML += `
+                    <div class="message ai">
+                        <div class="content">${response}</div>
+                        <div class="timestamp">${aiTimestamp}</div>
+                    </div>`;
+                messages.scrollTop = messages.scrollHeight;
+            })
+            .catch(error => {
+                typingIndicator.style.display = 'none';
+                console.error('Error:', error);
+                const errorMsg = currentLanguage === 'mr' ? 'अरेरे, काहीतरी चूक झाली!' : 'Oops, something went wrong!';
+                messages.innerHTML += `
+                    <div class="message ai">
+                        <div class="content">${errorMsg}</div>
+                        <div class="timestamp">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                    </div>`;
+                messages.scrollTop = messages.scrollHeight;
+            });
+        });
+    </script>
+
+
+		</script>
+</body>
+</html>

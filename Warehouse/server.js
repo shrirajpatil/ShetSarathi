@@ -9,10 +9,6 @@ app.use(express.static('public'));
 app.use(express.json());
 app.set('view engine', 'ejs');
 
-// API Keys (hardcoded)
-const GOOGLE_MAPS_API_KEY = 'AIzaSyAm94Qgvqz5fETSQyFRXUFKkHUFrMT1tPU'; // Replace if needed
-const WEATHER_API_KEY = '345135c152914c17c53ce6f5d3b82a21';
-
 // Constants
 const PETROL_RATE_PER_LITER = 100; // INR per liter
 const AVERAGE_TOLL_RATE_PER_KM = 1.5; // INR per km

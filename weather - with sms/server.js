@@ -9,14 +9,6 @@ app.use(cors());
 app.use(express.static(path.join(__dirname)));
 app.use(express.json()); // To parse JSON request bodies
 
-const API_KEY = "623db3d3a6dc4af6b7b103053251802"; // WeatherAPI key
-
-// Twilio credentials
-const accountSid = 'ACd4e66ee3426473a7aa81fdddd4c24452';
-const authToken = '5c390e68733ac9586e3765389d07c8ec';
-const twilioPhoneNumber = '+14178042346';
-const client = twilio(accountSid, authToken);
-
 function getFarmingInsights(weather, cropType) {
     const { temp_c, humidity, precip_mm, wind_kph, condition } = weather;
 

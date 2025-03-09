@@ -2,8 +2,6 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
-const GOOGLE_MAPS_API_KEY = 'AIzaSyD_EhQ9ohAdS1ZXbefuUivphrx4A4t4kkc';
-const WEATHER_API_KEY = '345135c152914c17c53ce6f5d3b82a21';
 
 // Define petrol and toll rates
 const PETROL_RATE_PER_LITER = 100; // Example rate in INR

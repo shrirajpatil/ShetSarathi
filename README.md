@@ -15,9 +15,52 @@ ShetSarathi is a Virtual Agricultural Marketplace designed to transform agricult
 - **Real-time Cost Analysis**: Helps farmers analyze market trends and optimize costs.
 - **Crop Prediction**: AI-powered crop recommendation system for better yield predictions.
 
-## Technologies Used
+## Prerequisites
 
-- **Machine Learning**: For crop prediction and personalized insights.
-- **Database Management**: Efficient storage and retrieval of agricultural data.
-- **Chatbot Integration**: AI-powered chatbot for farmer assistance.
-- **SMS APIs**: For weather updates and alerts.
+- Python 3.x (preferably Python 3.10 or higher)
+- pip (Python package manager)
+- Virtualenv (for creating isolated Python environments)
+- Git (to clone the repository)
+
+### Required Python Libraries
+- Django 5.x
+- scikit-learn
+- Pillow
+- and other libraries specified in `requirements.txt`.
+
+## Installation Guide
+
+Follow these steps to clone and set up the project on your local machine:
+
+### 1. Clone the Repository
+
+Start by cloning the repository to your local machine using the following command:
+
+```bash
+git clone https://github.com/your-username/ShetSarathi.git
+cd ShetSarathi
+```
+### 2. Set Up a Virtual Environment
+Run the following commands to create and activate the virtual environment:
+On Windows:
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+```
+### 3. Install Dependencies
+Once the virtual environment is activated, install the required dependencies:
+```bash
+pip install -r requirements.txt
+```
+This will install all the necessary packages such as Django, scikit-learn, Pillow, etc.
+### 4. Apply Migrations
+Next, apply the migrations to set up the database:
+```bash
+python manage.py migrate
+```
+### 5. Run the Development Server
+Start the development server with the following command:
+```bash
+python manage.py runserver
+```
+Your project will now be running at http://127.0.0.1:8000.

@@ -6,10 +6,6 @@ const { YoutubeTranscript } = require("youtube-transcript");
 const app = express();
 const PORT = 2200;
 
-const YOUTUBE_API_KEY = "AIzaSyDGzwP6hZKdmPh_fd87IPWK6KyQr5aGASE";
-const MONICA_API_KEY = "sk-dWYLG_WvNnGr0w0yRWTyYmB2_9tC3iwdjbR35L0dl6iwVVBXcDfcOQ34-Q9c4pozVN09TG5aVQj2UqwVQjPyIU27fxx1";
-const GEMINI_API_KEY = "AIzaSyD_EhQ9ohAdS1ZXbefuUivphrx4A4t4kkc";
-
 const path = require("path");
 
 const quizStore = new Map();

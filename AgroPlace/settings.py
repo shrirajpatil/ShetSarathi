@@ -21,11 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-t@30s5e-x#g5py-d841*di8-#1r=14auka*y3@a$7*n08&^du('
+SECRET_KEY = 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-GOOGLE_API_KEY = 'AIzaSyAVhxF-uRl1ygTQY92tA0qyLWXc9peqDcs'  # Replace with your key
-GOOGLE_MAPS_API_KEY = 'AIzaSyAm94Qgvqz5fETSQyFRXUFKkHUFrMT1tPU'  # Replace with your actual key
+GOOGLE_API_KEY = # Replace with your key
+GOOGLE_MAPS_API_KEY =  # Replace with your actual key
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'openai_chatbot',   
 ]
 
-GOOGLE_API_KEY = 'AIzaSyAVhxF-uRl1ygTQY92tA0qyLWXc9peqDcs'  # Replace with your key
+GOOGLE_API_KEY =  # Replace with your key
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

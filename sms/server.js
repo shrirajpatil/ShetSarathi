@@ -8,11 +8,7 @@ const cron = require('node-cron');
 const app = express();
 const port = 3000;
 
-// Twilio credentials (replace with your actual credentials)
-const accountSid = 'ACd4e66ee3426473a7aa81fdddd4c24452'; // Your Twilio SID
-const authToken = '5c390e68733ac9586e3765389d07c8ec';   // Your Twilio Auth Token
-const twilioPhoneNumber = '+14178042346';              // Your Twilio phone number
-const client = new twilio(accountSid, authToken);
+
 
 // In-memory storage for subscribers with their preferred times, cron jobs, and language
 let subscribers = [];
